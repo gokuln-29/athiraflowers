@@ -74,7 +74,7 @@ This is an operational list, not legal or tax advice; confirm with a UAE-qualifi
 | Item | Status | Evidence |
 |---|---|---|
 | Production build from a clean lockfile install | **partial** | `npm run build` succeeds (Next 16.3.3, Node 24 locally); `deploy.sh` uses `npm ci`. Server will run Node 22 (provision.sh) — **build on the VPS pending**. |
-| No secrets / `.env` / keys in repo or build | **partial** | `.env*` is git-ignored (only `.env.example` tracked, names only). A history scan for committed secrets was **not** run: do `git log -p \| grep -iE 'sk_live|service_role|AKIA'` before making the repo public. |
+| No secrets / `.env` / keys in repo or build | **verified** (2026-10-20) | `.env*` is git-ignored (only `.env.example` tracked, names only). `git log -p --all` scanned for `sk_live`, `sk_test_…`, `AKIA…`, `xkeysib-…`, `whsec_…`, `service_role`: the only hits are variable *names* in removed Supabase code and doc text, no key values. Re-run before making the repo public. |
 | Production env vars documented by name | **verified** | `.env.example`, `docs/DEPLOYMENT.md` §4. |
 | Migrations reviewed, repeatable, rollback strategy | **verified** (local) | `drizzle/0000_init.sql`, `0001_constraints.sql` applied to empty MySQL three times (incl. full rebuild tonight). Backward-compatible (expand/contract) policy documented; no down-migrations by design. |
 | Errors/logs don't leak stack traces, SQL, tokens, PII | **partial** | Actions return generic messages and `console.error` details (code review). OTP codes are logged only when `NODE_ENV !== production` and email is unconfigured. Not penetration-tested. |
@@ -126,7 +126,7 @@ post-launch backup + checksum · record release ID, migration version, evidence,
 | 1. Foundation | VPS, DNS, firewall, Node, private MySQL, staging | **pending** (scripts + configs written/tested locally) |
 | 2. Core store | Catalogue, admin, cart, delivery, order state model | **verified** (local) |
 | 3. Media | R2 + secure upload/processing + delivery | **partial** (pipeline verified on MinIO; real R2 pending) |
-| 4. Commerce | Order transaction correctness, payments, notifications | **partial** (see §11; invoice not built; no real Stripe/Brevo test) |
+| 4. Commerce | Order transaction correctness, payments, notifications | **partial** (see §11; invoices built and verified locally; no real Stripe/Brevo test) |
 | 5. Resilience | Encrypted offsite backup, alerts, retention, restore drill, rollback | **partial** (verified locally; real offsite + timers pending) |
 | 6. Quality | Security/a11y/SEO/perf/mobile pass | **partial** (§9/§11) |
 | 7. Launch | Pre-deploy gate, release, external smoke tests, go/no-go | **pending** |
@@ -136,5 +136,5 @@ post-launch backup + checksum · record release ID, migration version, evidence,
 Decision: [ ] GO  [ ] NO-GO  Date/time: ________  Release: ________  Owner: ________
 
 Blockers that must be cleared before GO: §0 decisions; real VPS provisioning + a full run of
-`deploy.sh`; real R2, Brevo and (if used) Stripe credentials with an end-to-end test; invoices (§10);
+`deploy.sh`; real R2, Brevo and (if used) Stripe credentials with an end-to-end test; TRN + legal details for invoices (§10);
 external uptime monitor; offsite backup target + first real restore drill; legal review.
