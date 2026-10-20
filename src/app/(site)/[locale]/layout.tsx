@@ -15,6 +15,7 @@ import {
 
 import { CartProvider } from "@/components/shop/cart-provider"
 import { AnnouncementBar } from "@/components/site/announcement-bar"
+import { ConsentBanner } from "@/components/site/consent"
 import { SiteFooter } from "@/components/site/footer"
 import { SiteHeader } from "@/components/site/header"
 import { Toaster } from "@/components/ui/toast"
@@ -141,6 +142,7 @@ export default async function LocaleLayout({
                 <SiteHeader locale={locale} />
                 <main id="main">{children}</main>
                 <SiteFooter locale={locale} />
+                {site.analytics.gaId && <ConsentBanner gaId={site.analytics.gaId} />}
               </CartProvider>
             </Toaster>
           </TooltipProvider>

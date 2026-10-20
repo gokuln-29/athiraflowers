@@ -7,7 +7,7 @@ import { routing } from "@/i18n/routing"
 const handleI18n = createMiddleware({ ...routing, alternateLinks: false })
 
 /** Paths that are not localised (admin, APIs, media, machine-readable files). */
-const PASSTHROUGH = ["/admin", "/api", "/media", "/llms.txt", "/health"]
+const PASSTHROUGH = ["/admin", "/api", "/media", "/llms.txt", "/health", "/sitemap.xml", "/robots.txt", "/manifest.webmanifest"]
 const isPassthrough = (pathname: string) =>
   PASSTHROUGH.some((p) => pathname === p || pathname.startsWith(`${p}/`))
 

@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server"
 
+import { CookieSettingsButton } from "@/components/site/consent"
 import { LocaleSwitcher } from "@/components/site/locale-switcher"
 import { site, siteName } from "@/config/site"
 import { Link } from "@/i18n/navigation"
@@ -8,8 +9,9 @@ import { listCategories } from "@/server/queries/catalog"
 import { getSettings } from "@/server/queries/content"
 
 export async function SiteFooter({ locale }: { locale: string }) {
-  const [t, tn, categories, settings] = await Promise.all([
+  const [t, tc, tn, categories, settings] = await Promise.all([
     getTranslations({ locale, namespace: "footer" }),
+    getTranslations({ locale, namespace: "consent" }),
     getTranslations({ locale, namespace: "nav" }),
     listCategories(locale),
     getSettings(),
@@ -66,6 +68,7 @@ export async function SiteFooter({ locale }: { locale: string }) {
                 </Link>
               </li>
             ))}
+            {site.analytics.gaId && <li className={linkClass}><CookieSettingsButton label={tc("settings")} /></li>}
           </ul>
           <h2 className="mt-6 text-lg font-medium">{t("cities")}</h2>
           <ul className="mt-3">

@@ -1,10 +1,11 @@
 import { setRequestLocale } from "next-intl/server"
 
 import { Categories, CtaBand, Faq, Featured, Hero, Logos, Pathways, Program, Steps, Testimonials } from "@/components/site/home-sections"
-import { site } from "@/config/site"
+import { JsonLd } from "@/components/seo/json-ld"
+import { absoluteUrl, site, siteName } from "@/config/site"
 import { homeSectionSchemas } from "@/lib/home-sections"
 import { pageMetadata } from "@/lib/seo"
-import { getHomeSections } from "@/server/queries/content"
+import { getHomeSections, getSettings } from "@/server/queries/content"
 import { getMediaMap } from "@/server/queries/media"
 import { getSeoOverride } from "@/server/queries/seo"
 
@@ -39,6 +40,22 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
   }
   const media = await getMediaMap(ids)
   const ctx = { locale, media }
+  const settings = await getSettings()
+  const c = settings.contact
+  const sameAs = Object.values(settings.social).filter((u): u is string => typeof u === "string" && /^https:\/\//.test(u))
+  const org = {
+    "@context": "https://schema.org",
+    "@graph": [
+      { "@type": "Organization", "@id": absoluteUrl("/#org"), name: siteName(locale), alternateName: [site.name, site.nameAr], url: absoluteUrl("/"), email: c.email, sameAs: sameAs.length ? sameAs : undefined },
+      {
+        "@type": "Florist", "@id": absoluteUrl("/#florist"), name: siteName(locale), url: absoluteUrl(`/${locale}`), email: c.email, telephone: c.phone, priceRange: "AED",
+        address: { "@type": "PostalAddress", addressCountry: "AE", addressLocality: "Dubai" },
+        areaServed: ["Dubai", "Abu Dhabi", "Sharjah"].map((name) => ({ "@type": "City", name })),
+        openingHours: "Su-Fr 08:00-19:00", parentOrganization: { "@id": absoluteUrl("/#org") },
+      },
+      { "@type": "WebSite", "@id": absoluteUrl("/#site"), url: absoluteUrl("/"), name: siteName(locale), inLanguage: locale, publisher: { "@id": absoluteUrl("/#org") } },
+    ],
+  }
 
   return (
     <>
@@ -64,7 +81,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
           default: return null
         }
       })}
-      <span hidden>{site.domain}</span>
+      <JsonLd data={org} />
     </>
   )
 }
