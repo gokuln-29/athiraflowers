@@ -2,18 +2,18 @@
 # Restore drill: proves the newest backup downloads, decrypts and loads, and that
 # the data inside is sane. Restores into a THROWAWAY database -- never production.
 # Run quarterly, and after any backup change or major schema change:
-#   sudo /usr/local/bin/adhira-restore-drill
-# Records duration + results in /var/log/adhira/restore-drill.log.
+#   sudo /usr/local/bin/athira-restore-drill
+# Records duration + results in /var/log/athira/restore-drill.log.
 set -Eeuo pipefail
-CONF="${ADHIRA_BACKUP_ENV:-/etc/adhira/backup.env}"
+CONF="${ATHIRA_BACKUP_ENV:-/etc/athira/backup.env}"
 set -a; . "$CONF"; set +a
 MYSQL="${MYSQL:-mysql}"
-LOG="${DRILL_LOG:-/var/log/adhira/restore-drill.log}"
+LOG="${DRILL_LOG:-/var/log/athira/restore-drill.log}"
 mkdir -p "$(dirname "$LOG")"
 NOTIFY="$(dirname "$(readlink -f "$0")")/../monitoring/notify.sh"
-[ -x "$NOTIFY" ] || NOTIFY=/usr/local/bin/adhira-notify
-DRILL_DB="adhira_drill_$(date +%s)"
-ADMIN_DEFAULTS="${DRILL_ADMIN_DEFAULTS_FILE:-/etc/adhira/drill-admin.cnf}"   # a user able to CREATE/DROP adhira_drill_*
+[ -x "$NOTIFY" ] || NOTIFY=/usr/local/bin/athira-notify
+DRILL_DB="athira_drill_$(date +%s)"
+ADMIN_DEFAULTS="${DRILL_ADMIN_DEFAULTS_FILE:-/etc/athira/drill-admin.cnf}"   # a user able to CREATE/DROP athira_drill_*
 WORK="$(mktemp -d)"; chmod 700 "$WORK"
 START=$(date +%s)
 
@@ -22,8 +22,8 @@ fail() { echo "$(date -u +%FT%TZ) DRILL FAILED: $*" | tee -a "$LOG"; "$NOTIFY" "
 trap 'fail "line $LINENO: $BASH_COMMAND"' ERR
 
 echo "[drill] fetching latest snapshot"
-restic snapshots --tag db --host adhira --latest 1 --compact
-restic dump latest adhira-db.sql.gz --tag db --host adhira > "$WORK/dump.sql.gz"
+restic snapshots --tag db --host athira --latest 1 --compact
+restic dump latest athira-db.sql.gz --tag db --host athira > "$WORK/dump.sql.gz"
 gunzip -t "$WORK/dump.sql.gz"
 $MYSQL --defaults-extra-file="$ADMIN_DEFAULTS" -e "CREATE DATABASE \`$DRILL_DB\` CHARACTER SET utf8mb4"
 gunzip -c "$WORK/dump.sql.gz" | $MYSQL --defaults-extra-file="$ADMIN_DEFAULTS" "$DRILL_DB"

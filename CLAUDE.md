@@ -1,6 +1,6 @@
 @AGENTS.md
 
-# Adhira Flowers — Corporate E-commerce (UAE) · adhiraflowers.ae
+# Athira Flowers — Corporate E-commerce (UAE) · adhiraflowers.ae
 
 B2B florist/plant storefront + admin panel for offices in Dubai, Abu Dhabi and Sharjah. Storefront content (products, prices, images, details) is fully admin-managed — no hardcoded product content. The brand name lives in one place: `SITE_NAME` in `src/lib/seo/site.ts`.
 
@@ -35,7 +35,7 @@ Source of truth for architecture and operations: `Adhira_Flowers_Architecture_Se
 
 ## Database (`drizzle/`, `src/lib/db/schema.ts`)
 
-- Change the schema in `schema.ts`, then `npm run db:generate`; hand-written SQL (triggers, CHECKs, generated columns) goes in a `--custom` migration. Apply with `npm run db:migrate` using `DATABASE_MIGRATE_URL` (schema owner). The app connects as `DATABASE_URL` (`adhira_app`, DML only). Never run manual SQL against production; never run destructive actions without a fresh backup.
+- Change the schema in `schema.ts`, then `npm run db:generate`; hand-written SQL (triggers, CHECKs, generated columns) goes in a `--custom` migration. Apply with `npm run db:migrate` using `DATABASE_MIGRATE_URL` (schema owner). The app connects as `DATABASE_URL` (`athira_app`, DML only). Never run manual SQL against production; never run destructive actions without a fresh backup.
 - IDs are `CHAR(36)` UUIDs generated in the app. Timestamps are `DATETIME(3)` UTC. Money is `DECIMAL(10,2)` surfaced as JS numbers; all arithmetic goes through integer fils in `priceLine()`.
 - The email unique indexes rely on the case-insensitive collation `utf8mb4_0900_ai_ci`. `tags`/`details`/`address` are JSON columns. "One primary image per product" is a unique index on a generated column. The last owner can't be removed/demoted (triggers).
 - InnoDB `REPEATABLE READ` gotcha: after a duplicate-key error inside a transaction, re-read with a locking read (`.for("share")`), otherwise you still see the old snapshot (see `upsertCustomer`).

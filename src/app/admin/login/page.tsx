@@ -48,7 +48,7 @@ export default function AdminLoginPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-(--color-canvas) px-6">
       <div className="w-full max-w-sm">
-        <span className="font-logo text-lg">Adhira Flowers</span>
+        <span className="font-logo text-lg">Athira Flowers</span>
         <h1 className="font-display mt-4 text-4xl">{step === "mfa" ? "Two-step check" : "Admin sign in"}</h1>
 
         <form onSubmit={handleSubmit} className="mt-8 flex flex-col gap-4">

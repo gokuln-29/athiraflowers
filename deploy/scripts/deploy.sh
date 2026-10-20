@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# Release deploy on the VPS. Run as the `adhira` deploy user (needs sudo only for
-# `systemctl restart adhira`, granted in /etc/sudoers.d/adhira).
+# Release deploy on the VPS. Run as the `athira` deploy user (needs sudo only for
+# `systemctl restart athira`, granted in /etc/sudoers.d/athira).
 #
 #   ./deploy.sh <git-ref>        e.g. ./deploy.sh main   or   ./deploy.sh v1.4.0
 #
-# Layout:  /srv/adhira/{repo, releases/<id>, current -> releases/<id>, shared}
+# Layout:  /srv/athira/{repo, releases/<id>, current -> releases/<id>, shared}
 # Order:   build -> DB backup -> migrate -> smoke-test NEW release on a spare
 #          port -> flip symlink -> restart -> health check -> auto-rollback on failure.
 # Apply migrations BEFORE the new code serves traffic; keep them backward compatible
@@ -12,8 +12,8 @@
 set -euo pipefail
 
 REF="${1:?usage: deploy.sh <git-ref>}"
-ROOT=/srv/adhira
-ENV_FILE=/etc/adhira/env
+ROOT=/srv/athira
+ENV_FILE=/etc/athira/env
 KEEP=5
 ID="$(date -u +%Y%m%d-%H%M%S)"
 REL="$ROOT/releases/$ID"
@@ -42,13 +42,13 @@ cp -r .next/static .next/standalone/.next/static
 [ -d public ] && cp -r public .next/standalone/public
 # The self-contained server we actually run lives in $REL/run.
 mkdir -p "$REL/run" && cp -r .next/standalone/. "$REL/run/"
-rm -rf "$REL/run/.next/cache" && ln -s /var/cache/adhira "$REL/run/.next/cache"
+rm -rf "$REL/run/.next/cache" && ln -s /var/cache/athira "$REL/run/.next/cache"
 
-if [ -x /usr/local/bin/adhira-backup ]; then
+if [ -x /usr/local/bin/athira-backup ]; then
   log "Pre-deploy database backup"
-  /usr/local/bin/adhira-backup
+  /usr/local/bin/athira-backup
 else
-  echo "WARNING: /usr/local/bin/adhira-backup missing, deploying without a fresh backup"
+  echo "WARNING: /usr/local/bin/athira-backup missing, deploying without a fresh backup"
 fi
 
 log "Applying migrations"
@@ -75,7 +75,7 @@ kill $SMOKE_PID 2>/dev/null || true; trap - EXIT
 log "Switching to $ID"
 ln -sfn "$REL/run" "$ROOT/current.new" && mv -Tf "$ROOT/current.new" "$ROOT/current"
 echo "$ID" > "$ROOT/current.id"
-sudo /bin/systemctl restart adhira
+sudo /bin/systemctl restart athira
 
 log "Health check"
 ok=0
@@ -87,7 +87,7 @@ if [ "$ok" -ne 1 ]; then
   echo "Health check FAILED -> rolling back to $PREV"
   if [ -n "$PREV" ] && [ -d "$PREV" ]; then
     ln -sfn "$PREV" "$ROOT/current.new" && mv -Tf "$ROOT/current.new" "$ROOT/current"
-    sudo /bin/systemctl restart adhira
+    sudo /bin/systemctl restart athira
   fi
   exit 1
 fi

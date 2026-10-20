@@ -1,0 +1,6 @@
+[Unit]
+Description=Athira health, disk, backup-age and TLS checks
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/athira-monitor

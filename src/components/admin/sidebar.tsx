@@ -74,7 +74,7 @@ export function AdminSidebar({ role }: { role: AdminRole }) {
       )}
     >
       <Link href="/admin" className="block px-2 font-logo text-sm">
-        Adhira Flowers
+        Athira Flowers
       </Link>
 
       <nav className="mt-8 flex flex-col gap-6">

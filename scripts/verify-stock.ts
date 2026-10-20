@@ -80,7 +80,7 @@ async function main() {
     await syncStockAlerts([a]);
     await settle();
     assert.deepEqual(await alertsFor(a), [{ kind: "low_stock", open: true, occ: 1 }]);
-    assert.equal(mails().filter((m) => m.subject.startsWith("[Adhira Flowers ALERT] Low stock")).length, 1);
+    assert.equal(mails().filter((m) => m.subject.startsWith("[Athira Flowers ALERT] Low stock")).length, 1);
     ok("dropping to 4 raises ONE low-stock alert and ONE email, however often it is re-checked");
 
     await db.update(products).set({ stock_qty: 2 }).where(eq(products.id, a));

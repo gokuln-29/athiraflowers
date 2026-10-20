@@ -1,5 +1,5 @@
 [Unit]
-Description=Run Adhira monitor every 5 minutes
+Description=Run Athira monitor every 5 minutes
 
 [Timer]
 OnBootSec=2min

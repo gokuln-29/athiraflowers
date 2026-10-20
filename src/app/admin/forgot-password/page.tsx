@@ -25,7 +25,7 @@ export default function ForgotPasswordPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-(--color-canvas) px-6">
       <div className="w-full max-w-sm">
-        <span className="font-logo text-lg">Adhira Flowers</span>
+        <span className="font-logo text-lg">Athira Flowers</span>
         <h1 className="font-display mt-4 text-4xl">Forgot password</h1>
         {sent ? (
           <div className="mt-6 flex flex-col gap-3 text-sm">

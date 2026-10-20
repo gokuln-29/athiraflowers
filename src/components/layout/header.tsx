@@ -80,7 +80,7 @@ export function Header() {
           </div>
 
           <Link href="/" className="inline-flex min-h-11 items-center font-logo text-[0.95rem] text-(--color-ink) [--logo-tracking:0.13em] sm:text-[1.15rem] sm:[--logo-tracking:0.2em] md:text-[1.55rem] md:[--logo-tracking:0.24em]">
-            Adhira Flowers
+            Athira Flowers
           </Link>
 
           <div className="flex items-center justify-end gap-4 md:gap-5">

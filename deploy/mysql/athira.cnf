@@ -1,4 +1,4 @@
-# /etc/mysql/mysql.conf.d/adhira.cnf  (restart MySQL, then verify: ss -ltn | grep 3306)
+# /etc/mysql/mysql.conf.d/athira.cnf  (restart MySQL, then verify: ss -ltn | grep 3306)
 [mysqld]
 bind-address            = 127.0.0.1
 mysqlx-bind-address     = 127.0.0.1

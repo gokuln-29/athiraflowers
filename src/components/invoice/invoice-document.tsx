@@ -65,7 +65,7 @@ export function InvoiceDocument({ invoice }: { invoice: InvoiceView }) {
     <article className="invoice mx-auto w-full max-w-[210mm] bg-white p-[14mm] text-[12px] leading-snug text-black">
       <header className="flex items-start justify-between gap-6 border-b-2 border-black pb-4">
         <div>
-          <p className="text-lg font-bold">{seller.legal_name ?? "Adhira Flowers"}</p>
+          <p className="text-lg font-bold">{seller.legal_name ?? "Athira Flowers"}</p>
           {seller.legal_name_ar && (
             <p lang="ar" dir="rtl" className="text-base font-semibold" style={{ fontFamily: "var(--font-arabic)" }}>
               {seller.legal_name_ar}

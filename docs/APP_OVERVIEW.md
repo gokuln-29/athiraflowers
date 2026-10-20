@@ -1,4 +1,4 @@
-# Adhira Flowers — App Overview
+# Athira Flowers — App Overview
 
 B2B florist and plant storefront with an admin panel, for offices in Dubai, Abu Dhabi and Sharjah (UAE). All product content (products, prices, images, details) is managed by admins in the database. Nothing is hardcoded.
 
@@ -94,7 +94,7 @@ Admin edits product/category/offer/post -> saved through the authorized server a
 - Order confirmation is looked up by random `public_token`, never by order number.
 - `lib/db`, `lib/auth/*` and the R2 modules are server-only and never imported into Client Components.
 - Visitors get generic errors; details go to `console.error`.
-- Secrets live in env vars only (`.env.example`). `NEXT_PUBLIC_*` are build-time; DB, R2, Brevo and Stripe secrets are runtime only (`/etc/adhira/env` on the VPS).
+- Secrets live in env vars only (`.env.example`). `NEXT_PUBLIC_*` are build-time; DB, R2, Brevo and Stripe secrets are runtime only (`/etc/athira/env` on the VPS).
 
 ## 8. Running locally
 

@@ -21,15 +21,15 @@ fi
 timedatectl set-timezone Asia/Dubai   # logs/cron in local time; the DB stores UTC.
 
 # Service account (no login) and deploy user.
-id adhira >/dev/null 2>&1 || useradd --system --home /srv/adhira --shell /usr/sbin/nologin adhira
+id athira >/dev/null 2>&1 || useradd --system --home /srv/athira --shell /usr/sbin/nologin athira
 id deploy >/dev/null 2>&1 || adduser --disabled-password --gecos "" deploy
-usermod -aG adhira deploy
-install -d -o deploy -g adhira -m 0755 /srv/adhira /srv/adhira/releases
-install -d -o adhira -g adhira -m 0750 /var/cache/adhira
-install -d -o root -g adhira -m 0750 /etc/adhira
-install -d -m 0755 /var/www/certbot /var/log/adhira
-echo 'deploy ALL=(root) NOPASSWD: /bin/systemctl restart adhira, /bin/systemctl status adhira' > /etc/sudoers.d/adhira
-chmod 440 /etc/sudoers.d/adhira
+usermod -aG athira deploy
+install -d -o deploy -g athira -m 0755 /srv/athira /srv/athira/releases
+install -d -o athira -g athira -m 0750 /var/cache/athira
+install -d -o root -g athira -m 0750 /etc/athira
+install -d -m 0755 /var/www/certbot /var/log/athira
+echo 'deploy ALL=(root) NOPASSWD: /bin/systemctl restart athira, /bin/systemctl status athira' > /etc/sudoers.d/athira
+chmod 440 /etc/sudoers.d/athira
 
 # Firewall: default-deny inbound; 3306 is never opened.
 ufw default deny incoming
@@ -46,14 +46,14 @@ APT::Periodic::Update-Package-Lists "1";
 APT::Periodic::Unattended-Upgrade "1";
 APT::Periodic::AutocleanInterval "7";
 CONF
-cat > /etc/apt/apt.conf.d/52adhira-unattended <<'CONF'
+cat > /etc/apt/apt.conf.d/52athira-unattended <<'CONF'
 Unattended-Upgrade::Automatic-Reboot "true";
 Unattended-Upgrade::Automatic-Reboot-Time "04:00";
 Unattended-Upgrade::Remove-Unused-Dependencies "true";
 CONF
 
 # SSH hardening (drop-in; reload only after validating).
-cat > /etc/ssh/sshd_config.d/99-adhira.conf <<'CONF'
+cat > /etc/ssh/sshd_config.d/99-athira.conf <<'CONF'
 PermitRootLogin prohibit-password
 PubkeyAuthentication yes
 MaxAuthTries 3
@@ -61,7 +61,7 @@ X11Forwarding no
 CONF
 if [ "${DISABLE_SSH_PASSWORDS:-0}" = "1" ]; then
   if [ -s /home/deploy/.ssh/authorized_keys ] || [ -s /root/.ssh/authorized_keys ]; then
-    echo 'PasswordAuthentication no' >> /etc/ssh/sshd_config.d/99-adhira.conf
+    echo 'PasswordAuthentication no' >> /etc/ssh/sshd_config.d/99-athira.conf
   else echo "NOT disabling SSH passwords: no authorized_keys found."; fi
 fi
 sshd -t && systemctl reload ssh
@@ -69,7 +69,7 @@ sshd -t && systemctl reload ssh
 systemctl enable --now fail2ban unattended-upgrades
 
 # MySQL: loopback only (config copied from the repo), then verify.
-install -m 0644 "$(dirname "$0")/../mysql/adhira.cnf" /etc/mysql/mysql.conf.d/adhira.cnf
+install -m 0644 "$(dirname "$0")/../mysql/athira.cnf" /etc/mysql/mysql.conf.d/athira.cnf
 systemctl restart mysql
 if ss -ltn | grep ':3306' | grep -vq '127.0.0.1'; then echo "ERROR: MySQL is listening on a public address"; exit 1; fi
 
@@ -77,11 +77,11 @@ if ss -ltn | grep ':3306' | grep -vq '127.0.0.1'; then echo "ERROR: MySQL is lis
 DEBIAN_FRONTEND=noninteractive apt-get -y install libnss3 libatk1.0-0t64 libatk-bridge2.0-0t64 libcups2t64 libdrm2 \
   libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3 libxrandr2 libgbm1 libasound2t64 libpango-1.0-0 libcairo2 \
   fonts-noto-core 2>/dev/null || echo "NOTE: some Chrome libraries have different names on this Ubuntu release; install what apt reports missing."
-if [ ! -d /opt/adhira-chrome ]; then
-  install -d -m 0755 /opt/adhira-chrome
-  npx --yes @puppeteer/browsers install chrome@stable --path /opt/adhira-chrome
+if [ ! -d /opt/athira-chrome ]; then
+  install -d -m 0755 /opt/athira-chrome
+  npx --yes @puppeteer/browsers install chrome@stable --path /opt/athira-chrome
 fi
-echo "Set CHROME_PATH in /etc/adhira/env to: $(find /opt/adhira-chrome -type f -name chrome -perm -u+x | head -1)"
+echo "Set CHROME_PATH in /etc/athira/env to: $(find /opt/athira-chrome -type f -name chrome -perm -u+x | head -1)"
 
-echo "Done. Next: create DB users (deploy/mysql/create-users.sql), write /etc/adhira/env,"
+echo "Done. Next: create DB users (deploy/mysql/create-users.sql), write /etc/athira/env,"
 echo "install nginx config + snippet, certbot, systemd units, backup + monitoring (see docs/DEPLOYMENT.md)."

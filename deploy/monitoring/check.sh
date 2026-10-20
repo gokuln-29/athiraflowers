@@ -1,21 +1,21 @@
 #!/usr/bin/env bash
-# Every 5 minutes (adhira-monitor.timer): app health, disk, memory, backup age, TLS expiry.
+# Every 5 minutes (athira-monitor.timer): app health, disk, memory, backup age, TLS expiry.
 # Alerts at most once per hour per problem. This watches the server from the inside;
 # ALSO configure an external uptime monitor (UptimeRobot/BetterStack) for
 # https://adhiraflowers.ae/en and a TLS-expiry check, which detects "whole VPS is down".
 set -uo pipefail
-CONF="${ADHIRA_BACKUP_ENV:-/etc/adhira/backup.env}"
+CONF="${ATHIRA_BACKUP_ENV:-/etc/athira/backup.env}"
 [ -r "$CONF" ] && { set -a; . "$CONF"; set +a; }
-STATE_DIR="${STATE_DIR:-/var/lib/adhira}"
+STATE_DIR="${STATE_DIR:-/var/lib/athira}"
 HEALTH_URL="${HEALTH_URL:-http://127.0.0.1:3000/api/health}"
 DISK_PATH="${DISK_PATH:-/}"
-NOTIFY="$(dirname "$(readlink -f "$0")")/notify.sh"; [ -x "$NOTIFY" ] || NOTIFY=/usr/local/bin/adhira-notify
+NOTIFY="$(dirname "$(readlink -f "$0")")/notify.sh"; [ -x "$NOTIFY" ] || NOTIFY=/usr/local/bin/athira-notify
 mkdir -p "$STATE_DIR/alerts"
 problems=()
 
 alert() { # key, message  (dedupe: once per hour)
   local f="$STATE_DIR/alerts/$1" now; now=$(date +%s)
-  if [ ! -f "$f" ] || [ $((now - $(cat "$f"))) -gt 3600 ]; then echo "$now" > "$f"; "$NOTIFY" "ADHIRA: $2" "$2 (host $(hostname), $(date -u +%FT%TZ))"; fi
+  if [ ! -f "$f" ] || [ $((now - $(cat "$f"))) -gt 3600 ]; then echo "$now" > "$f"; "$NOTIFY" "ATHIRA: $2" "$2 (host $(hostname), $(date -u +%FT%TZ))"; fi
   problems+=("$2")
 }
 clear_alert() { rm -f "$STATE_DIR/alerts/$1"; }

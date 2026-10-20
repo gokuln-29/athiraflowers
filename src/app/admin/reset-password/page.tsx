@@ -43,7 +43,7 @@ function ResetForm() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-(--color-canvas) px-6">
       <div className="w-full max-w-sm">
-        <span className="font-logo text-lg">Adhira Flowers</span>
+        <span className="font-logo text-lg">Athira Flowers</span>
         <h1 className="font-display mt-4 text-4xl">Reset password</h1>
         {state === "checking" && <p className="mt-6 text-sm text-(--color-muted)">Checking your link...</p>}
         {state === "dead" && (

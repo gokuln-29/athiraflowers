@@ -4,7 +4,7 @@ import { SITE_NAME } from "@/lib/seo/site";
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: SITE_NAME,
-    short_name: "Adhira Flowers",
+    short_name: "Athira Flowers",
     description: "Flowers, gifts and plant setups for offices, events and celebrations across the UAE.",
     start_url: "/",
     display: "standalone",

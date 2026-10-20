@@ -1,4 +1,4 @@
-# Deploying Adhira Flowers (adhiraflowers.ae) to a Hostinger Ubuntu VPS
+# Deploying Athira Flowers (adhiraflowers.ae) to a Hostinger Ubuntu VPS
 
 Source of truth: `Adhira_Flowers_Architecture_Setup_Plan.pdf`. This document is the
 runnable version of PDF sections 2, 5, 6, 7 and 8. Nothing here is marked "done" until
@@ -6,13 +6,13 @@ you have run it and recorded the evidence in `docs/LAUNCH_CHECKLIST.md`.
 
 ```
 Browser ─HTTPS─► Nginx :443 (TLS, headers, rate limits, body limits)
-                   └─► 127.0.0.1:3000  Next.js (systemd, user `adhira`, not root)
+                   └─► 127.0.0.1:3000  Next.js (systemd, user `athira`, not root)
                           ├─► MySQL 127.0.0.1:3306 (never public)
                           ├─► Cloudflare R2   (images; browser PUTs via presigned URLs)
                           ├─► Stripe          (card payments + signed webhooks, optional)
                           └─► Brevo           (sign-in codes, order emails)
-adhira-backup.timer ─► mysqldump ─► gzip ─► restic (encrypted) ─► offsite repo (Google Drive via rclone)
-adhira-monitor.timer ─► health / disk / memory / backup age / TLS expiry ─► email alert
+athira-backup.timer ─► mysqldump ─► gzip ─► restic (encrypted) ─► offsite repo (Google Drive via rclone)
+athira-monitor.timer ─► health / disk / memory / backup age / TLS expiry ─► email alert
 ```
 
 Repo files used here: `deploy/nginx/*`, `deploy/systemd/*`, `deploy/mysql/*`,
@@ -42,8 +42,8 @@ SSH_ALLOW_FROM=<your.office.ip>  DISABLE_SSH_PASSWORDS=1  sudo -E bash deploy/sc
 
 It installs Nginx, certbot, MySQL, Node 22, restic, rclone, ufw, fail2ban and
 unattended-upgrades; sets timezone `Asia/Dubai` (the database stores UTC); creates the
-`adhira` service user and `deploy` user; enables the firewall (80/443 + SSH only; **3306 is
-never opened**); installs `deploy/mysql/adhira.cnf` (bind `127.0.0.1`) and aborts if MySQL is
+`athira` service user and `deploy` user; enables the firewall (80/443 + SSH only; **3306 is
+never opened**); installs `deploy/mysql/athira.cnf` (bind `127.0.0.1`) and aborts if MySQL is
 listening on a public address. Password SSH is only disabled if an `authorized_keys` exists.
 
 Verify: `sudo ufw status verbose` · `ss -ltn | grep 3306` (only `127.0.0.1`) ·
@@ -56,14 +56,14 @@ Verify: `sudo ufw status verbose` · `ss -ltn | grep 3306` (only `127.0.0.1`) ·
 sudo mysql < deploy/mysql/create-users.sql
 ```
 
-Three accounts, all `@localhost`: `adhira_app` (SELECT/INSERT/UPDATE/DELETE only),
-`adhira_migrate` (schema owner, used by deploys), `adhira_backup` (read-only dump privileges).
+Three accounts, all `@localhost`: `athira_app` (SELECT/INSERT/UPDATE/DELETE only),
+`athira_migrate` (schema owner, used by deploys), `athira_backup` (read-only dump privileges).
 Row-level security no longer exists; access control is `authorize()` in application code plus
 this least-privilege account (so even a compromised app cannot `DROP` a table).
 
 ## 4. Environment file
 
-Create `/etc/adhira/env` (`root:adhira`, mode `0640`) from `.env.example`. Required in
+Create `/etc/athira/env` (`root:athira`, mode `0640`) from `.env.example`. Required in
 production: `NEXT_PUBLIC_SITE_URL=https://adhiraflowers.ae`, `DATABASE_URL`,
 `DATABASE_MIGRATE_URL`, `AUTH_SECRET` (`openssl rand -hex 32`), `BREVO_API_KEY`, `EMAIL_FROM`,
 `R2_*`, `MEDIA_PUBLIC_URL`, `ALERT_EMAIL` (payment/webhook alerts). Optional: `STRIPE_*`. Secrets exist only here, never in git, the
@@ -73,8 +73,8 @@ rebuild (deploy again) after changing them. `AUTH_SECRET` must stay stable.
 ## 5. Systemd and Nginx
 
 ```bash
-sudo cp deploy/systemd/adhira*.{service,timer} /etc/systemd/system/
-sudo cp deploy/nginx/adhira-proxy.conf /etc/nginx/snippets/
+sudo cp deploy/systemd/athira*.{service,timer} /etc/systemd/system/
+sudo cp deploy/nginx/athira-proxy.conf /etc/nginx/snippets/
 sudo cp deploy/nginx/adhiraflowers.ae.conf /etc/nginx/sites-available/ && sudo ln -s ../sites-available/adhiraflowers.ae.conf /etc/nginx/sites-enabled/
 sudo rm -f /etc/nginx/sites-enabled/default
 # First get a certificate (HTTP only config first, or use --standalone while nginx is stopped):
@@ -90,9 +90,9 @@ If `nginx -t` fails because the certificate does not exist yet, temporarily comm
 ## 6. First deploy
 
 ```bash
-echo https://github.com/gokuln-29/adhira.git | sudo -u deploy tee /srv/adhira/repo.url   # read-only deploy key recommended
+echo https://github.com/gokuln-29/adhira.git | sudo -u deploy tee /srv/athira/repo.url   # read-only deploy key recommended
 sudo -u deploy bash deploy/scripts/deploy.sh main
-sudo systemctl enable --now adhira
+sudo systemctl enable --now athira
 curl -s http://127.0.0.1:3000/api/health          # {"status":"ok"}
 ```
 
@@ -105,10 +105,10 @@ releases. Rollback by hand: `deploy/scripts/rollback.sh [release-id]`.
 Create the first owner (password never goes through argv):
 
 ```bash
-cd /srv/adhira/releases/$(cat /srv/adhira/current.id)
+cd /srv/athira/releases/$(cat /srv/athira/current.id)
 read -rsp 'Admin password (12+ chars): ' ADMIN_PASSWORD; echo
 sudo -u deploy env ADMIN_EMAIL=you@adhiraflowers.ae ADMIN_NAME="Your name" ADMIN_ROLE=owner \
-  ADMIN_PASSWORD="$ADMIN_PASSWORD" DATABASE_MIGRATE_URL="<from /etc/adhira/env>" npm run admin:create
+  ADMIN_PASSWORD="$ADMIN_PASSWORD" DATABASE_MIGRATE_URL="<from /etc/athira/env>" npm run admin:create
 unset ADMIN_PASSWORD
 ```
 Then sign in at `/admin/login` and enable two-factor under **Account**; save the recovery codes.
@@ -119,7 +119,7 @@ Then sign in at `/admin/login` and enable two-factor under **Account**; save the
 
 ## 7. Cloudflare R2 (images)
 
-1. Create bucket `adhira-media`. Attach the custom domain `media.adhiraflowers.ae` (public read).
+1. Create bucket `athira-media`. Attach the custom domain `media.adhiraflowers.ae` (public read).
    Use **separate** `staging/` keys: only the app writes there, and objects are deleted after processing.
 2. Create an **API token** scoped to *Object Read & Write* on this bucket only → `R2_ACCESS_KEY_ID/SECRET`.
 3. **CORS** on the bucket: allowed origin `https://adhiraflowers.ae` only, methods `PUT`, headers
@@ -141,55 +141,55 @@ customers cannot check out (card is the only payment method), so Stripe keys are
 
 Tax invoices are issued automatically when a payment is recorded. Before the first real order:
 enter the **TRN, legal name and address (English + Arabic)** in Admin > Settings. `provision.sh`
-installs headless Chrome into `/opt/adhira-chrome`; put its path in `CHROME_PATH` in `/etc/adhira/env`
+installs headless Chrome into `/opt/athira-chrome`; put its path in `CHROME_PATH` in `/etc/athira/env`
 (printed at the end of provisioning) so the PDF is attached to customer emails. Check it with:
-open an invoice, click *Download PDF*; `journalctl -u adhira | grep "invoice pdf"` shows failures.
+open an invoice, click *Download PDF*; `journalctl -u athira | grep "invoice pdf"` shows failures.
 
 ## 9. Backups and restore drills (PDF section 7)
 
 ```bash
-sudo install -m 0755 deploy/backup/backup.sh /usr/local/bin/adhira-backup
-sudo install -m 0755 deploy/backup/restore-drill.sh /usr/local/bin/adhira-restore-drill
-sudo install -m 0755 deploy/monitoring/notify.sh /usr/local/bin/adhira-notify
-sudo install -m 0755 deploy/monitoring/check.sh /usr/local/bin/adhira-monitor
-sudo cp deploy/backup/backup.env.example /etc/adhira/backup.env && sudo chmod 600 /etc/adhira/backup.env   # then edit
+sudo install -m 0755 deploy/backup/backup.sh /usr/local/bin/athira-backup
+sudo install -m 0755 deploy/backup/restore-drill.sh /usr/local/bin/athira-restore-drill
+sudo install -m 0755 deploy/monitoring/notify.sh /usr/local/bin/athira-notify
+sudo install -m 0755 deploy/monitoring/check.sh /usr/local/bin/athira-monitor
+sudo cp deploy/backup/backup.env.example /etc/athira/backup.env && sudo chmod 600 /etc/athira/backup.env   # then edit
 sudo rclone config                                  # create the `gdrive` remote (dedicated backup account, MFA on)
-openssl rand -base64 48 | sudo tee /etc/adhira/restic.pass >/dev/null && sudo chmod 600 /etc/adhira/restic.pass
+openssl rand -base64 48 | sudo tee /etc/athira/restic.pass >/dev/null && sudo chmod 600 /etc/athira/restic.pass
 #   >>> COPY restic.pass AND the rclone crypt password into the password manager NOW. <<<
-sudo restic -r rclone:gdrive:adhira-restic --password-file /etc/adhira/restic.pass init
-printf '[client]\nuser=adhira_backup\npassword=...\n' | sudo tee /etc/adhira/backup.cnf >/dev/null && sudo chmod 600 /etc/adhira/backup.cnf
-sudo systemctl enable --now adhira-backup.timer adhira-monitor.timer
-sudo systemctl start adhira-backup.service && journalctl -u adhira-backup -n 30
+sudo restic -r rclone:gdrive:athira-restic --password-file /etc/athira/restic.pass init
+printf '[client]\nuser=athira_backup\npassword=...\n' | sudo tee /etc/athira/backup.cnf >/dev/null && sudo chmod 600 /etc/athira/backup.cnf
+sudo systemctl enable --now athira-backup.timer athira-monitor.timer
+sudo systemctl start athira-backup.service && journalctl -u athira-backup -n 30
 ```
 
 What runs daily (02:30 Dubai): `mysqldump --single-transaction --routines --events --triggers` →
 gzip → restic (client-side AES-256) → offsite; a sanity check that the stored dump contains the
 `orders` table; weekly additive `rclone copy` of R2 media to a separate encrypted remote (R2 is not
 an independent backup); `restic forget --keep-daily 14 --keep-weekly 8 --keep-monthly 12 --prune`;
-`restic check`. Failures email `ALERT_EMAIL` via Brevo; the timer stops → `adhira-monitor` alerts
+`restic check`. Failures email `ALERT_EMAIL` via Brevo; the timer stops → `athira-monitor` alerts
 when the last good backup is older than 26 h; an optional `HEALTHCHECK_URL` dead-man switch covers
 the whole VPS dying.
 
 **Restore drill (quarterly, and after backup or schema changes):**
-`sudo adhira-restore-drill` restores the newest snapshot into a throwaway database and checks
+`sudo athira-restore-drill` restores the newest snapshot into a throwaway database and checks
 table count, orphan order items, order totals, triggers, admin accounts and sampled image URLs,
-then logs the duration to `/var/log/adhira/restore-drill.log`. It needs a MySQL admin option file
-at `/etc/adhira/drill-admin.cnf` (a user that can create/drop `adhira_drill_*` databases).
+then logs the duration to `/var/log/athira/restore-drill.log`. It needs a MySQL admin option file
+at `/etc/athira/drill-admin.cnf` (a user that can create/drop `athira_drill_*` databases).
 Full disaster procedure: `deploy/backup/RESTORE_RUNBOOK.md`.
 
 ## 10. Monitoring (PDF section 9)
 
-`adhira-monitor` (every 5 min) checks app+DB health, disk ≥ 80 %, memory < 10 % free, backup age,
+`athira-monitor` (every 5 min) checks app+DB health, disk ≥ 80 %, memory < 10 % free, backup age,
 TLS expiry < 14 days, and that MySQL is not publicly bound; alerts once an hour per problem.
 **Also** add an external monitor (UptimeRobot/BetterStack) on `https://adhiraflowers.ae/en` and the
-TLS certificate: an in-server check cannot see "the VPS is down". Logs: `journalctl -u adhira`,
+TLS certificate: an in-server check cannot see "the VPS is down". Logs: `journalctl -u athira`,
 `/var/log/nginx/`, MySQL slow log.
 
 ## 11. Updating / rotating
 
-- Deploy: `sudo -u deploy bash /srv/adhira/repo/deploy/scripts/deploy.sh <ref>`
+- Deploy: `sudo -u deploy bash /srv/athira/repo/deploy/scripts/deploy.sh <ref>`
 - Rollback: `deploy/scripts/rollback.sh`
-- Rotate a leaked secret: change it in `/etc/adhira/env`, `sudo systemctl restart adhira`; for R2
+- Rotate a leaked secret: change it in `/etc/athira/env`, `sudo systemctl restart athira`; for R2
   revoke the token in Cloudflare first. Changing `AUTH_SECRET` invalidates MFA enrolments (re-enrol).
 - OS patches: unattended-upgrades handle security updates, with an automatic 04:00 reboot when needed
-  (the app and MySQL start on boot; check `systemctl status adhira` after).
+  (the app and MySQL start on boot; check `systemctl status athira` after).

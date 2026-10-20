@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
-# adhira-notify "<subject>" "<body>"  -> email via Brevo (transactional API).
-# Reads BREVO_API_KEY, ALERT_EMAIL, ALERT_FROM from /etc/adhira/backup.env.
+# athira-notify "<subject>" "<body>"  -> email via Brevo (transactional API).
+# Reads BREVO_API_KEY, ALERT_EMAIL, ALERT_FROM from /etc/athira/backup.env.
 # Always prints to stderr so journald keeps a copy even if email fails.
 set -uo pipefail
-SUBJECT="${1:-adhira alert}"; BODY="${2:-}"
+SUBJECT="${1:-athira alert}"; BODY="${2:-}"
 echo "[ALERT] $SUBJECT :: $BODY" >&2
-CONF="${ADHIRA_BACKUP_ENV:-/etc/adhira/backup.env}"
+CONF="${ATHIRA_BACKUP_ENV:-/etc/athira/backup.env}"
 [ -r "$CONF" ] && { set -a; . "$CONF"; set +a; }
 [ -n "${BREVO_API_KEY:-}" ] && [ -n "${ALERT_EMAIL:-}" ] || exit 0
 payload=$(python3 - "$SUBJECT" "$BODY" <<'PY'
 import json, os, sys
 print(json.dumps({
-  "sender": {"email": os.environ.get("ALERT_FROM", "alerts@adhiraflowers.ae"), "name": "Adhira alerts"},
+  "sender": {"email": os.environ.get("ALERT_FROM", "alerts@adhiraflowers.ae"), "name": "Athira alerts"},
   "to": [{"email": os.environ["ALERT_EMAIL"]}],
   "subject": sys.argv[1],
   "textContent": sys.argv[2],

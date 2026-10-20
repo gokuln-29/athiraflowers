@@ -7,8 +7,8 @@ const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"]
 
 export const metadata: Metadata = {
   title: {
-    default: "Admin | Adhira Flowers",
-    template: "%s | Adhira Flowers Admin",
+    default: "Admin | Athira Flowers",
+    template: "%s | Athira Flowers Admin",
   },
   robots: { index: false, follow: false },
 };
