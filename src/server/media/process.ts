@@ -65,21 +65,31 @@ export async function processImage(input: Buffer, maxBytes: number): Promise<Pro
   const checksum = createHash("sha256").update(input).digest("hex")
   const base = () => sharp(input, { limitInputPixels: MAX_PIXELS, failOn: "error" }).rotate()
 
-  const stats = await base().resize(32, 32, { fit: "inside" }).stats()
-  const [r, g, b] = stats.channels.map((c) => Math.round(c.mean))
-  const dominant = `#${[r, g, b].map((v) => v.toString(16).padStart(2, "0")).join("")}`
+  let dominant: string
+  try {
+    const stats = await base().resize(32, 32, { fit: "inside" }).stats()
+    const [r, g, b] = stats.channels.map((c) => Math.round(c.mean))
+    dominant = `#${[r, g, b].map((v) => v.toString(16).padStart(2, "0")).join("")}`
+  } catch {
+    // Header looked fine but the pixel data is truncated or corrupt.
+    throw new ImageRejected("The image could not be decoded")
+  }
 
   const targets: number[] = VARIANT_WIDTHS.filter((w) => w < width)
   targets.push(Math.min(width, VARIANT_WIDTHS[VARIANT_WIDTHS.length - 1]))
   const unique = [...new Set(targets)].sort((a, b) => a - b)
 
   const variants: ProcessedVariant[] = []
-  for (const w of unique) {
-    const { data, info } = await base()
-      .resize({ width: w, withoutEnlargement: true })
-      .webp({ quality: 80, effort: 4 })
-      .toBuffer({ resolveWithObject: true })
-    variants.push({ w: info.width, h: info.height, bytes: data.length, data })
+  try {
+    for (const w of unique) {
+      const { data, info } = await base()
+        .resize({ width: w, withoutEnlargement: true })
+        .webp({ quality: 80, effort: 4 })
+        .toBuffer({ resolveWithObject: true })
+      variants.push({ w: info.width, h: info.height, bytes: data.length, data })
+    }
+  } catch {
+    throw new ImageRejected("The image could not be re-encoded")
   }
 
   return { mime: sniffed, width, height, checksum, dominant, variants }

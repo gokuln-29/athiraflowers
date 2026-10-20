@@ -14,6 +14,9 @@ export function dubaiNow(now: Date = new Date()): DubaiNow {
   return { day: `${get("year")}-${get("month")}-${get("day")}`, minutes: hour * 60 + Number(get("minute")), dow }
 }
 
+/** Wall-clock now in ms. A named wrapper so server pages can read the clock outside render analysis. */
+export const nowMs = () => Date.now()
+
 export const toMinutes = (hhmm: string) => {
   const [h, m] = hhmm.split(":").map(Number)
   return h * 60 + m

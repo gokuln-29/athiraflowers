@@ -3,7 +3,7 @@ import { eq, sql } from "drizzle-orm"
 import type Stripe from "stripe"
 
 import { db } from "@/db"
-import { orderItems, orders, orderStatusHistory, payments, stripeEvents } from "@/db/schema"
+import { orderItems, orders, orderStatusHistory, paymentLinks, payments, stripeEvents } from "@/db/schema"
 import { absoluteUrl } from "@/config/site"
 import { env } from "@/lib/env"
 import { flushOutbox, queueEmail } from "@/server/email/outbox"
@@ -91,7 +91,31 @@ async function processEvent(event: Stripe.Event): Promise<Outcome> {
   }
 }
 
+/** Payment links: matched by link id from metadata, then amount and currency against what we stored. */
+async function markLinkPaid(session: Stripe.Checkout.Session): Promise<Outcome> {
+  const linkId = Number(session.metadata?.payment_link_id)
+  const result = await db.transaction(async (tx) => {
+    const [link] = await tx.select().from(paymentLinks).where(eq(paymentLinks.id, linkId)).for("update")
+    if (!link) return { kind: "failed" as const, detail: "payment link not found" }
+    if (session.amount_total !== link.amountMinor || session.currency?.toLowerCase() !== link.currency.toLowerCase()) {
+      await audit({ actorType: "webhook", action: "payment.amount_mismatch", entity: "payment_link", entityId: link.id, meta: { expected: link.amountMinor, received: session.amount_total ?? -1 } }, tx)
+      return { kind: "failed" as const, detail: "amount or currency mismatch" }
+    }
+    if (link.status === "paid") return { kind: "already" as const }
+    const intent = typeof session.payment_intent === "string" ? session.payment_intent : session.payment_intent?.id ?? null
+    await tx.update(paymentLinks).set({ status: "paid", paidAt: new Date(), stripeSessionId: session.id }).where(eq(paymentLinks.id, link.id))
+    await tx.insert(payments).values({ paymentLinkId: link.id, provider: "stripe", kind: "charge", providerRef: intent ?? session.id, amountMinor: link.amountMinor, currency: link.currency, status: "succeeded" })
+    const notify = env().NOTIFY_EMAIL
+    if (notify) await queueEmail(tx, { kind: "paylink.paid", to: notify, subject: `Payment link paid: ${link.title}`, html: `<p>${link.title}: AED ${(link.amountMinor / 100).toFixed(2)} was paid.</p>`, text: `${link.title}: AED ${(link.amountMinor / 100).toFixed(2)} was paid.`, dedupeKey: `paylink:${link.id}:paid` })
+    await audit({ actorType: "webhook", action: "payment_link.paid", entity: "payment_link", entityId: link.id, meta: { amount: link.amountMinor } }, tx)
+    return { kind: "paid" as const }
+  })
+  if (result.kind === "failed") return { status: "failed", detail: result.detail }
+  return { status: "processed", detail: result.kind === "already" ? "already paid" : "payment link paid" }
+}
+
 async function markPaid(session: Stripe.Checkout.Session): Promise<Outcome> {
+  if (session.metadata?.payment_link_id) return markLinkPaid(session)
   const orderId = Number(session.metadata?.order_id ?? session.client_reference_id)
   if (!Number.isInteger(orderId)) return { status: "failed", detail: "missing order reference" }
 

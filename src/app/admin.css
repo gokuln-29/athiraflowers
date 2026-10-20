@@ -70,3 +70,21 @@
   background: #8a2b3f;
   color: #fff;
 }
+
+/* Dense controls inside the admin. */
+.admin [data-slot="input"],
+.admin [data-slot="native-select"] {
+  height: 2.25rem;
+  font-size: 0.875rem;
+  background: var(--card);
+}
+.admin textarea[data-slot="textarea"] {
+  font-size: 0.875rem;
+  background: var(--card);
+}
+.admin [data-slot="button"] {
+  font-size: 0.875rem;
+}
+.admin [data-slot="button"][class*="h-10"] {
+  height: 2.25rem;
+}

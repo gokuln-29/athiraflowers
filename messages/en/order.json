@@ -48,5 +48,10 @@
  "downloadInvoice": "Download tax invoice",
  "help": "Ask about this order on WhatsApp",
  "newTab": "opens in a new tab",
- "continueShopping": "Continue shopping"
+ "continueShopping": "Continue shopping",
+ "linkPaid": "This payment has been received. Thank you.",
+ "linkCancelled": "This payment link was cancelled. Please contact us.",
+ "linkExpired": "This payment link has expired. Please ask us for a new one.",
+ "linkUnavailable": "Online payment is not available right now. Please contact us.",
+ "linkSecure": "You will pay on a secure Stripe page. We never see your card number."
 }
