@@ -37,3 +37,12 @@ pnpm-debug.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# keep the example env
+!.env.example
+/.storage/
+/.dev-mail/
+/.taste-skill/
+/.impeccable/
+/test-results/
+/playwright-report/
