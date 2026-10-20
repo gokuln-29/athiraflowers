@@ -46,3 +46,5 @@ next-env.d.ts
 /.impeccable/
 /test-results/
 /playwright-report/
+/.dev-credentials
+/seed-assets/photos/*.jpg.tmp
