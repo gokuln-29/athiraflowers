@@ -6,6 +6,7 @@ import { db } from "@/db"
 import { adminSessions, adminUsers } from "@/db/schema"
 import { attemptLogin, beginMfaEnrollment, confirmMfaEnrollment, verifyMfaCode, changePassword } from "@/server/auth/admin-auth"
 import { ADMIN_COOKIE, authorize, AuthorizationError, getAdminContext } from "@/server/auth/admin-session"
+import { can, PERMISSIONS } from "@/server/auth/permissions"
 import { decryptSecret } from "@/server/security/crypto"
 
 import { jar } from "./setup"
@@ -114,6 +115,30 @@ describe("admin login", () => {
     await expect(authorize("orders:write")).resolves.toBeTruthy()
     await expect(authorize("catalog:write")).rejects.toMatchObject({ code: "forbidden" })
     await expect(authorize("staff:write")).rejects.toMatchObject({ code: "forbidden" })
+  })
+
+  it("role matrix is exactly the documented one, for every permission", async () => {
+    const expected: Record<string, string[]> = {
+      owner: [...PERMISSIONS],
+      manager: ["dashboard:view", "catalog:read", "catalog:write", "offers:write", "blog:write", "content:write", "reports:read", "media:write"],
+      staff: ["dashboard:view", "orders:read", "orders:write", "leads:read", "leads:write", "customers:read", "payment-links:write"],
+    }
+    for (const role of ["owner", "manager", "staff"] as const) {
+      for (const perm of PERMISSIONS) expect(can(role, perm), `${role} ${perm}`).toBe(expected[role].includes(perm))
+    }
+    // The sensitive ones never leak below owner.
+    for (const perm of ["staff:write", "audit:read", "settings:write", "delivery:write"] as const) {
+      expect(can("manager", perm)).toBe(false)
+      expect(can("staff", perm)).toBe(false)
+    }
+  })
+
+  it("a manager can edit the catalogue but not orders, staff or settings", async () => {
+    await enrolled("manager")
+    await expect(authorize("catalog:write")).resolves.toBeTruthy()
+    await expect(authorize("orders:write")).rejects.toMatchObject({ code: "forbidden" })
+    await expect(authorize("staff:write")).rejects.toMatchObject({ code: "forbidden" })
+    await expect(authorize("settings:write")).rejects.toMatchObject({ code: "forbidden" })
   })
 
   it("disabled admins cannot use an existing session", async () => {

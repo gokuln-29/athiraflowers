@@ -9,7 +9,7 @@ export const productSchema = z
     id: z.number().int().positive().optional(),
     slug: z.string().trim().max(140).regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, "Lowercase letters, numbers and hyphens only").or(z.literal("")),
     sku: z.string().trim().min(2).max(60).regex(/^[A-Za-z0-9._-]+$/, "Letters, numbers, dot, dash and underscore only"),
-    categoryId: z.number().int().positive(),
+    categoryId: z.number({ error: "Choose a category" }).int("Choose a category").positive("Choose a category"),
     nameEn: text(180).min(2),
     nameAr: text(180).default(""),
     shortEn: text(300).default(""),
