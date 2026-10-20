@@ -27,7 +27,7 @@ export function CategoriesManager({ rows, canWrite }: { rows: CategoryRow[]; can
   return (
     <>
       {canWrite && <div className="mb-4"><Button onClick={() => { save.clear(); setEditing({ ...blank, sort: rows.length }) }}><Plus data-icon="inline-start" />New category</Button></div>}
-      <div className="panel overflow-x-auto">
+      <div className="panel relative overflow-x-auto">
         <table className="w-full text-sm">
           <thead className="bg-muted/50 text-left text-xs text-muted-foreground"><tr><th className="w-14 px-3 py-2"><span className="sr-only">Image</span></th><th className="px-3 py-2 font-medium">Category</th><th className="px-3 py-2 font-medium">Web address</th><th className="px-3 py-2 text-right font-medium">Products</th><th className="px-3 py-2 font-medium">State</th></tr></thead>
           <tbody>

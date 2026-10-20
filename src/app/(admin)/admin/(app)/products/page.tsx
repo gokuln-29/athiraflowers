@@ -55,7 +55,7 @@ export default async function ProductsPage({ searchParams }: PageProps<"/admin/p
         </select>
         <Button type="submit" variant="outline" size="sm">Filter</Button>
       </form>
-      <div className="panel overflow-x-auto">
+      <div className="panel relative overflow-x-auto">
         <table className="w-full text-sm">
           <thead className="bg-muted/50 text-left text-xs text-muted-foreground"><tr><th className="w-14 px-3 py-2"><span className="sr-only">Photo</span></th><th className="px-3 py-2 font-medium">Product</th><th className="px-3 py-2 font-medium">Category</th><th className="px-3 py-2 text-right font-medium">Price</th><th className="px-3 py-2 text-right font-medium">Stock</th><th className="px-3 py-2 font-medium">State</th></tr></thead>
           <tbody>

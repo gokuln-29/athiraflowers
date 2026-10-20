@@ -33,7 +33,7 @@ export function StaffManager({ rows }: { rows: StaffRow[] }) {
 
       <Panel title="Team">
         {rowSave.error && <p role="alert" className="mb-2 rounded-md bg-destructive/10 p-2 text-sm text-destructive">{rowSave.error}</p>}
-        <div className="overflow-x-auto">
+        <div className="relative overflow-x-auto">
           <table className="w-full text-sm">
             <thead className="text-left text-xs text-muted-foreground"><tr><th className="py-1 font-medium">Person</th><th className="py-1 font-medium">Role</th><th className="py-1 font-medium">Two-step</th><th className="py-1 font-medium">Last sign-in</th><th className="py-1 font-medium">Status</th><th className="py-1"><span className="sr-only">Actions</span></th></tr></thead>
             <tbody>

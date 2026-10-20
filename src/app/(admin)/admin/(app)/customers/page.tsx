@@ -30,7 +30,7 @@ export default async function CustomersPage({ searchParams }: PageProps<"/admin/
     <>
       <PageHeader title="Customers" description="Customers sign in with an email code; guest buyers appear in Orders." actions={<Button render={/* file download, not a page */ /* eslint-disable-next-line @next/next/no-html-link-for-pages */ <a href="/api/admin/reports/customers" download />} variant="outline" size="sm">Export CSV</Button>} />
       <form action="/admin/customers" className="mb-4 flex gap-2"><Input name="q" defaultValue={q} placeholder="Search email, name, company or phone" aria-label="Search customers" className="max-w-sm" /><Button type="submit" variant="outline" size="sm">Search</Button></form>
-      <div className="panel overflow-x-auto">
+      <div className="panel relative overflow-x-auto">
         <table className="w-full text-sm">
           <thead className="bg-muted/50 text-left text-xs text-muted-foreground"><tr><th className="px-3 py-2 font-medium">Customer</th><th className="px-3 py-2 font-medium">Company</th><th className="px-3 py-2 text-right font-medium">Orders</th><th className="px-3 py-2 text-right font-medium">Paid total</th><th className="px-3 py-2 font-medium">Joined</th><th className="px-3 py-2 font-medium">Marketing</th></tr></thead>
           <tbody>

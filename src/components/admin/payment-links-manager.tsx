@@ -41,7 +41,7 @@ export function PaymentLinksManager({ rows }: { rows: LinkRow[] }) {
 
       <Panel title="Links">
         {cancel.error && <p role="alert" className="mb-2 text-sm text-destructive">{cancel.error}</p>}
-        <div className="overflow-x-auto">
+        <div className="relative overflow-x-auto">
           <table className="w-full text-sm">
             <thead className="text-left text-xs text-muted-foreground"><tr><th className="py-1 font-medium">For</th><th className="py-1 text-right font-medium">Amount</th><th className="py-1 font-medium">Status</th><th className="py-1 font-medium">Expires</th><th className="py-1"><span className="sr-only">Actions</span></th></tr></thead>
             <tbody>

@@ -18,7 +18,7 @@ export function SeoManager({ rows }: { rows: SeoRow[] }) {
   const save = useSave()
   return (
     <>
-      <div className="panel overflow-x-auto">
+      <div className="panel relative overflow-x-auto">
         <table className="w-full text-sm">
           <thead className="bg-muted/50 text-left text-xs text-muted-foreground"><tr><th className="px-3 py-2 font-medium">Page</th><th className="px-3 py-2 font-medium">Title</th><th className="px-3 py-2 font-medium">Description</th><th className="px-3 py-2 font-medium">Search engines</th></tr></thead>
           <tbody>

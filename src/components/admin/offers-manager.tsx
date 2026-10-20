@@ -27,7 +27,7 @@ export function OffersManager({ rows }: { rows: CouponRow[] }) {
   return (
     <>
       <div className="mb-4"><Button onClick={() => { save.clear(); setC(blank) }}><Plus data-icon="inline-start" />New offer</Button></div>
-      <div className="panel overflow-x-auto">
+      <div className="panel relative overflow-x-auto">
         <table className="w-full text-sm">
           <thead className="bg-muted/50 text-left text-xs text-muted-foreground"><tr><th className="px-3 py-2 font-medium">Code</th><th className="px-3 py-2 font-medium">Discount</th><th className="px-3 py-2 font-medium">Valid</th><th className="px-3 py-2 text-right font-medium">Used</th><th className="px-3 py-2 font-medium">State</th></tr></thead>
           <tbody>

@@ -28,7 +28,7 @@ export default async function DashboardPage() {
               {d.kpi.pending > 0 && <Link href="/admin/orders?status=pending&when=all" className="text-sm font-medium text-primary underline underline-offset-4">{d.kpi.pending} awaiting confirmation</Link>}
             </div>
             {d.docket.length === 0 ? <p className="py-6 text-center text-sm text-muted-foreground">Nothing is scheduled for delivery today.</p> : (
-              <div className="overflow-x-auto">
+              <div className="relative overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead className="text-left text-xs text-muted-foreground"><tr><th className="py-1 font-medium">Slot</th><th className="py-1 font-medium">Order</th><th className="py-1 font-medium">Area</th><th className="py-1 font-medium">Status</th></tr></thead>
                   <tbody>

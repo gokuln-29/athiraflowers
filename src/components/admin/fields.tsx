@@ -22,7 +22,7 @@ export function Check({ label, checked, onChange }: { label: string; checked: bo
 
 export function Panel({ title, description, children, actions }: { title: string; description?: string; children: React.ReactNode; actions?: React.ReactNode }) {
   return (
-    <section className="panel p-4" aria-label={title}>
+    <section className="panel min-w-0 p-4" aria-label={title}>
       <div className="mb-3 flex items-start justify-between gap-3">
         <div>
           <h2 className="text-sm font-semibold">{title}</h2>

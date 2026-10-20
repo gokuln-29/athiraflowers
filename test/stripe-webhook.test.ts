@@ -2,7 +2,7 @@ import { eq } from "drizzle-orm"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import { db } from "@/db"
-import { auditLog, emailOutbox, orders, payments, products, stripeEvents } from "@/db/schema"
+import { auditLog, emailOutbox, orders, paymentLinks, payments, products, stripeEvents } from "@/db/schema"
 import { placeOrder } from "@/server/orders/place"
 import { getStripe } from "@/server/payments/stripe"
 import { handleStripeWebhook } from "@/server/payments/webhook"
@@ -170,5 +170,34 @@ describe("Stripe webhook", () => {
     expect((await handleStripeWebhook(refund.payload, refund.header)).body).toBe("processed")
     expect((await db.select().from(orders))[0].paymentStatus).toBe("partially_refunded")
     expect((await db.select().from(payments).where(eq(payments.kind, "refund")))[0].amountMinor).toBe(10000)
+  })
+})
+
+describe("Payment links", () => {
+  async function link() {
+    const [row] = await db.insert(paymentLinks).values({ token: "a".repeat(32), title: "Event deposit", amountMinor: 150000, status: "active" }).$returningId()
+    return row.id
+  }
+  const paid = (id: number, over: Record<string, unknown> = {}) => sessionEvent("evt_pl_1", "checkout.session.completed", { id: "cs_pl_1", payment_status: "paid", amount_total: 150000, currency: "aed", payment_intent: "pi_pl_1", metadata: { payment_link_id: String(id) }, ...over })
+
+  it("marks the link paid once, records one payment, and a replayed event changes nothing", async () => {
+    const id = await link()
+    const a = signed(paid(id))
+    expect((await handleStripeWebhook(a.payload, a.header)).status).toBe(200)
+    const [l] = await db.select().from(paymentLinks)
+    expect(l.status).toBe("paid")
+    expect(l.paidAt).not.toBeNull()
+    const again = signed(paid(id))
+    expect((await handleStripeWebhook(again.payload, again.header)).status).toBe(200)
+    expect(await db.select().from(payments)).toHaveLength(1)
+  })
+
+  it("refuses an amount that does not match the link, leaving it unpaid", async () => {
+    const id = await link()
+    const a = signed(paid(id, { amount_total: 100 }))
+    await handleStripeWebhook(a.payload, a.header)
+    const [l] = await db.select().from(paymentLinks)
+    expect(l.status).toBe("active")
+    expect(await db.select().from(payments)).toHaveLength(0)
   })
 })

@@ -28,7 +28,7 @@ export function BlogManager({ rows, cats, author }: { rows: PostRow[]; cats: Blo
   if (editing) return <PostEditor key={editing.id} initial={editing} cats={cats} onClose={() => setEditing(null)} />
   return (
     <Panel title="Articles" actions={<Button size="sm" onClick={() => setEditing(blank(author))}><Plus data-icon="inline-start" />New article</Button>}>
-      <div className="overflow-x-auto">
+      <div className="relative overflow-x-auto">
         <table className="w-full text-sm">
           <thead className="text-left text-xs text-muted-foreground"><tr><th className="py-1 font-medium">Title</th><th className="py-1 font-medium">Status</th><th className="py-1 font-medium">Date</th><th className="py-1"><span className="sr-only">Actions</span></th></tr></thead>
           <tbody>

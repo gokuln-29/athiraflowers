@@ -67,12 +67,12 @@ export default async function OrdersPage({ searchParams }: PageProps<"/admin/ord
       ) : (
         <div className="grid gap-6">
           {[...groups.entries()].map(([day, list]) => (
-            <section key={day} aria-label={formatDay(day, "en")}>
+            <section key={day} aria-label={formatDay(day, "en")} className="min-w-0">
               <h2 className="mb-2 flex items-baseline gap-3 text-sm font-semibold">
                 {formatDay(day, "en")}
                 <span className="meta num font-normal">{list.length} {list.length === 1 ? "order" : "orders"} · {formatMoney(list.reduce((n, o) => n + o.totalMinor, 0), "en", { compact: true })}</span>
               </h2>
-              <div className="panel overflow-x-auto">
+              <div className="panel relative overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead className="bg-muted/50 text-left text-xs text-muted-foreground">
                     <tr><th className="px-3 py-2 font-medium">Window</th><th className="px-3 py-2 font-medium">Order</th><th className="px-3 py-2 font-medium">Customer</th><th className="px-3 py-2 font-medium">Area</th><th className="px-3 py-2 font-medium">Status</th><th className="px-3 py-2 font-medium">Payment</th><th className="px-3 py-2 text-right font-medium">Total</th></tr>
@@ -81,9 +81,9 @@ export default async function OrdersPage({ searchParams }: PageProps<"/admin/ord
                     {list.map((o) => (
                       <tr key={o.id} className="border-t hover:bg-muted/40">
                         <td className="px-3 py-2 whitespace-nowrap">{o.slotLabel.split(",")[0]}</td>
-                        <td className="px-3 py-2"><Link href={`/admin/orders/${o.id}`} className="num font-medium text-primary underline-offset-4 hover:underline">{o.orderNumber}</Link></td>
-                        <td className="px-3 py-2">{o.contactName}{o.companyName ? <span className="meta block">{o.companyName}</span> : null}</td>
-                        <td className="px-3 py-2">{o.area}<span className="meta block">{o.zoneName}</span></td>
+                        <td className="px-3 py-2 whitespace-nowrap"><Link href={`/admin/orders/${o.id}`} className="num font-medium text-primary underline-offset-4 hover:underline">{o.orderNumber}</Link></td>
+                        <td className="px-3 py-2 whitespace-nowrap">{o.contactName}{o.companyName ? <span className="meta block">{o.companyName}</span> : null}</td>
+                        <td className="px-3 py-2 whitespace-nowrap">{o.area}<span className="meta block">{o.zoneName}</span></td>
                         <td className="px-3 py-2"><OrderStatusBadge status={o.status} label={STATUS_LABEL[o.status]} /></td>
                         <td className="px-3 py-2 whitespace-nowrap">{o.paymentMethod === "cod" ? "Cash" : "Card"} · {o.paymentStatus}</td>
                         <td className="num px-3 py-2 text-right">{formatMoney(o.totalMinor, "en")}</td>

@@ -15,7 +15,7 @@ export function AdminShell({ admin, children }: { admin: { name: string; email: 
   return (
     <SidebarProvider style={{ "--sidebar-width": "15rem" } as React.CSSProperties}>
       <AdminNav groups={groups} brand={site.name} admin={admin} signOut={logoutAction} />
-      <SidebarInset className="bg-background">
+      <SidebarInset className="min-w-0 bg-background">
         <header className="flex h-12 items-center gap-2 px-4 md:hidden">
           <SidebarTrigger aria-label="Open navigation" />
           <Separator orientation="vertical" className="h-4" />
@@ -23,7 +23,7 @@ export function AdminShell({ admin, children }: { admin: { name: string; email: 
             {site.name}
           </Link>
         </header>
-        <div className="mx-auto w-full max-w-[1280px] px-4 py-6 md:px-8 md:py-8">{children}</div>
+        <div className="mx-auto w-full min-w-0 max-w-[1280px] px-4 py-6 md:px-8 md:py-8">{children}</div>
       </SidebarInset>
     </SidebarProvider>
   )

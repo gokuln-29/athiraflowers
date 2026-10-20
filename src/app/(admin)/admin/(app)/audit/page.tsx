@@ -29,7 +29,7 @@ export default async function AuditPage({ searchParams }: PageProps<"/admin/audi
         <select name="actor" defaultValue={actor ?? ""} aria-label="Actor type" className="h-9 rounded-md border border-input bg-card px-2 text-sm"><option value="">Anyone</option><option value="admin">Staff</option><option value="customer">Customers</option><option value="webhook">Webhooks</option><option value="system">System</option></select>
         <Button type="submit" variant="outline" size="sm">Filter</Button>
       </form>
-      <div className="panel overflow-x-auto">
+      <div className="panel relative overflow-x-auto">
         <table className="w-full text-sm">
           <thead className="bg-muted/50 text-left text-xs text-muted-foreground"><tr><th className="px-3 py-2 font-medium">When</th><th className="px-3 py-2 font-medium">Who</th><th className="px-3 py-2 font-medium">Action</th><th className="px-3 py-2 font-medium">Record</th><th className="px-3 py-2 font-medium">Details</th></tr></thead>
           <tbody>
