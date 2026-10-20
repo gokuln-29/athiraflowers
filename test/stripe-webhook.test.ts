@@ -201,3 +201,18 @@ describe("Payment links", () => {
     expect(await db.select().from(payments)).toHaveLength(0)
   })
 })
+
+describe("Maintenance job", () => {
+  it("cancels an unpaid card order after the grace period and restores stock; leaves fresh ones alone", async () => {
+    const { fx, order } = await stripeOrder(5)
+    const { runMaintenance } = await import("@/server/maintenance")
+    expect((await runMaintenance()).unpaid_card_orders_cancelled).toBe(0)
+    expect((await db.select().from(orders))[0].status).toBe("pending")
+    await db.update(orders).set({ createdAt: new Date(Date.now() - 3 * 3_600_000) }).where(eq(orders.id, order.id))
+    expect((await runMaintenance()).unpaid_card_orders_cancelled).toBe(1)
+    const [after] = await db.select().from(orders)
+    expect(after.status).toBe("cancelled")
+    const [p] = await db.select().from(products).where(eq(products.id, fx.productId))
+    expect(p.stockQty).toBe(5)
+  })
+})

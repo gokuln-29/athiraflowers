@@ -12,6 +12,7 @@
     "typecheck": "tsc --noEmit",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "node --env-file=.env --import tsx scripts/migrate.ts",
+    "maintenance": "node --env-file=.env --conditions react-server --import tsx scripts/maintenance.ts",
     "db:seed": "node --env-file=.env --conditions react-server --import tsx scripts/seed.ts",
     "test": "vitest run",
     "db:migrate:test": "DATABASE_MIGRATE_URL=\"$(grep ^DATABASE_MIGRATE_URL= .env | cut -d= -f2- | tr -d '\"' | sed 's#/athira$#/athira_test#')\" node --import tsx scripts/migrate.ts"
