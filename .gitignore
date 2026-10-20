@@ -48,3 +48,4 @@ next-env.d.ts
 /playwright-report/
 /.dev-credentials
 /seed-assets/photos/*.jpg.tmp
+.e2e-owner-totp
