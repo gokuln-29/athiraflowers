@@ -96,6 +96,9 @@ async function main() {
     mediaByKey.set(item.key, id)
   }
 
+  // Page hero images
+  await db.update(t.settings).set({ value: { corporate: mediaByKey.get("blog-office") ?? null, events: mediaByKey.get("event-table") ?? null, about: mediaByKey.get("about-studio") ?? null, contact: mediaByKey.get("bouquet-market") ?? null, offers: mediaByKey.get("bouquet-peony") ?? null, blog: mediaByKey.get("blog-care") ?? null } }).where(sql`${t.settings.key} = 'heroes'`)
+
   // Categories
   const categoryIds = new Map<string, number>()
   let cSort = 0

@@ -25,6 +25,9 @@ export default defineConfig({
       DATABASE_URL: swapDb(env.DATABASE_URL),
       DATABASE_MIGRATE_URL: swapDb(env.DATABASE_MIGRATE_URL),
       STORAGE_DRIVER: "local",
+      STRIPE_SECRET_KEY: "sk_test_dummy_key_for_signature_tests",
+      STRIPE_WEBHOOK_SECRET: "whsec_test_secret_for_unit_tests",
+      NOTIFY_EMAIL: "staff@example.test",
     },
   },
 })

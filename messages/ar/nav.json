@@ -1,0 +1,6 @@
+{
+  "shop": "المتجر", "corporate": "الشركات", "events": "الفعاليات", "offers": "العروض", "blog": "المدونة", "about": "من نحن", "contact": "تواصل معنا",
+  "account": "حسابي", "cart": "السلة", "cartCount": "السلة، {count, plural, =0 {فارغة} one {منتج واحد} two {منتجان} few {# منتجات} many {# منتجاً} other {# منتج}}",
+  "quote": "اطلب عرض سعر", "mainNav": "التنقل الرئيسي", "mobileNav": "التنقل على الجوال", "home": "{name}، الرئيسية", "openMenu": "فتح القائمة",
+  "flowersIn": "زهور في {city}", "opensInNewTab": "يفتح في علامة تبويب جديدة"
+}

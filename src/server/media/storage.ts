@@ -144,7 +144,7 @@ let driver: StorageDriver | undefined
 export function storage(): StorageDriver {
   if (driver) return driver
   const e = env()
-  if (e.STORAGE_DRIVER === "local" && e.NODE_ENV === "production") {
+  if (e.STORAGE_DRIVER === "local" && e.NODE_ENV === "production" && e.ALLOW_LOCAL_STORAGE !== "1") {
     throw new Error("Local storage is not allowed in production")
   }
   driver = e.STORAGE_DRIVER === "r2" ? new R2Driver() : new LocalDriver()

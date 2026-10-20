@@ -1,0 +1,8 @@
+{
+  "title": "Your cart", "empty": "Your cart is empty", "emptyHint": "Add flowers, plants or a weekly program to get started.", "browse": "Browse the shop",
+  "checkout": "Go to checkout", "viewCart": "View cart", "continueShopping": "Continue shopping", "remove": "Remove {name}", "add": "Add to cart",
+  "added": "Added to cart", "deposit": "Refundable deposit", "depositHint": "Not subject to VAT. Returned when the vase is collected.", "subtotal": "Subtotal",
+  "deliveryAtCheckout": "Delivery fee and VAT are shown at checkout.", "refreshing": "Updating prices…", "priceNote": "Prices include 5% VAT.",
+  "minQtyHint": "Minimum {min}", "lineIssues": { "unavailable": "No longer available", "below_min": "Minimum quantity is {min}", "above_max": "Maximum quantity is {max}", "insufficient_stock": "Only {available} left", "invalid_quantity": "Check the quantity" },
+  "program": "Weekly program: {qty} deliveries", "rental": "Rental for {days} days", "qtyFor": "Quantity for {name}", "couldNotLoad": "We could not update your cart prices. Try again."
+}

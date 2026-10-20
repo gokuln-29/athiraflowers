@@ -1,0 +1,37 @@
+{
+ "ctaShop": "Shop flowers",
+ "ctaQuote": "Request a corporate quote",
+ "deliveryTitle": "Delivery in {city}",
+ "zoneLine": "Delivery {fee}. Minimum order {min}.",
+ "zoneFree": "Free delivery over {amount}.",
+ "sameDayYes": "Same-day delivery available when you order before the cut-off.",
+ "sameDayNo": "Order by the day before for delivery here.",
+ "cutoffs": "Same-day cut-offs for Dubai-style windows:",
+ "popularTitle": "Popular for {city}",
+ "viewAll": "View all",
+ "faqTitle": "Delivery questions for {city}",
+ "dubai": {
+  "name": "Dubai",
+  "metaTitle": "Flowers and event decor in Dubai",
+  "metaDescription": "Same-day flower delivery in Dubai, weekly office flower programs and event decor for Downtown, Business Bay, DIFC and the Marina.",
+  "title": "Flowers for Dubai offices, events and gifts",
+  "intro": "We deliver bouquets, plants and weekly office flower programs across Dubai, and dress events from boardroom dinners to launches. Same-day delivery is available in selected areas when you order before the cut-off.",
+  "areas": "Downtown Dubai, Business Bay, DIFC, Dubai Marina, JLT and neighbouring areas, with other Dubai areas delivered at a standard fee."
+ },
+ "abu-dhabi": {
+  "name": "Abu Dhabi",
+  "metaTitle": "Flowers and event decor in Abu Dhabi",
+  "metaDescription": "Flower delivery in Abu Dhabi for offices, hotels and events, with weekly programs, corporate gifts and tax invoices.",
+  "title": "Flowers for Abu Dhabi offices, hotels and events",
+  "intro": "We deliver to Abu Dhabi city, Al Maryah Island and Yas with a day's notice, and run weekly flower programs for offices and hotel lobbies. Corporate orders receive a tax invoice with your TRN and purchase-order number.",
+  "areas": "Abu Dhabi city, Al Maryah Island, Yas Island and nearby areas. Orders are scheduled for the following day so that flowers arrive fresh."
+ },
+ "sharjah": {
+  "name": "Sharjah",
+  "metaTitle": "Flowers and event decor in Sharjah",
+  "metaDescription": "Flower delivery in Sharjah for offices and events, with same-day delivery in selected areas, weekly programs and corporate gifting.",
+  "title": "Flowers for Sharjah offices, events and gifts",
+  "intro": "We deliver across Sharjah city and Al Majaz, with same-day delivery in selected areas, weekly office programs and corporate gifts invoiced with your TRN.",
+  "areas": "Sharjah city, Al Majaz and surrounding areas."
+ }
+}

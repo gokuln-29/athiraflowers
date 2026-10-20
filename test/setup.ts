@@ -4,6 +4,8 @@ import { vi } from "vitest"
 export const jar = new Map<string, string>()
 export const requestHeaders = new Headers({ "x-real-ip": "203.0.113.7", "user-agent": "vitest" })
 
+vi.mock("next/server", async (orig) => ({ ...(await orig<typeof import("next/server")>()), after: () => undefined }))
+
 vi.mock("next/headers", () => ({
   cookies: async () => ({
     get: (name: string) => (jar.has(name) ? { name, value: jar.get(name)! } : undefined),

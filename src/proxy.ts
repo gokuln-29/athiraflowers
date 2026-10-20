@@ -71,7 +71,8 @@ function buildCsp(nonce: string): string {
     `form-action 'self' https://checkout.stripe.com`,
     `frame-ancestors 'none'`,
   ]
-  if (!dev) directives.push("upgrade-insecure-requests")
+  // Skipped for local rehearsals over http://localhost.
+  if (!dev && !site.url.startsWith("http://localhost")) directives.push("upgrade-insecure-requests")
   return directives.join("; ")
 }
 

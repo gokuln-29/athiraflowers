@@ -1,0 +1,6 @@
+{
+  "shop": "Shop", "corporate": "Corporate", "events": "Events", "offers": "Offers", "blog": "Journal", "about": "About", "contact": "Contact",
+  "account": "Account", "cart": "Cart", "cartCount": "Cart, {count, plural, =0 {empty} one {1 item} other {# items}}",
+  "quote": "Request a quote", "mainNav": "Main navigation", "mobileNav": "Mobile navigation", "home": "{name}, home", "openMenu": "Open menu",
+  "flowersIn": "Flowers in {city}", "opensInNewTab": "opens in a new tab"
+}

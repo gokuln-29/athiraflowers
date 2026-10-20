@@ -1,6 +1,8 @@
 /** Seed content. Everything here is editable in the admin. Legal text is a DRAFT pending review by a UAE advisor. */
 
 export const seedSettings = {
+  /** Media ids for page hero images (managed in admin > Store settings). Filled by the seed. */
+  heroes: {} as Record<string, number | null>,
   contact: {
     // PLACEHOLDER numbers: owner must replace before launch (see docs/LAUNCH_CHECKLIST.md).
     whatsapp: "+971500000000",

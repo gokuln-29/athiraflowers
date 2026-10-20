@@ -1,0 +1,94 @@
+{
+ "name": "Full name",
+ "company": "Company",
+ "email": "Work email",
+ "phone": "Phone",
+ "phoneHint": "Include the country code, for example +971.",
+ "message": "Message",
+ "details": "Anything else we should know",
+ "optional": "Optional",
+ "choose": "Choose…",
+ "need": "What do you need?",
+ "frequency": "How often?",
+ "emirate": "Where?",
+ "locations": "Number of locations",
+ "trn": "Company TRN",
+ "trnHint": "15 digits. Used on your tax invoice.",
+ "eventType": "Type of event",
+ "eventDate": "Event date",
+ "guests": "Number of guests",
+ "venue": "Venue",
+ "budget": "Budget (AED)",
+ "consultation": "I would like a consultation call or visit",
+ "consent": "I agree to be contacted about this request and I have read the",
+ "privacy": "privacy policy",
+ "consentNote": "We use your details only to reply to this request.",
+ "sentTitle": "Thank you, we have your request",
+ "sendAnother": "Send another request",
+ "sentBody": {
+  "corporate_quote": "We will reply with a quote, usually within one working day. A confirmation is on its way to your inbox.",
+  "event": "We will reply to discuss the date and details, usually within one working day. A confirmation is on its way to your inbox.",
+  "contact": "We will reply as soon as we can, usually within one working day. A confirmation is on its way to your inbox."
+ },
+ "submit": {
+  "corporate_quote": "Request a quote",
+  "event": "Send event enquiry",
+  "contact": "Send message"
+ },
+ "options": {
+  "need": {
+   "program": "A weekly or monthly flower program",
+   "gifting": "Corporate gifting",
+   "both": "Both",
+   "other": "Something else"
+  },
+  "frequency": {
+   "weekly": "Weekly",
+   "monthly": "Monthly",
+   "one_off": "One-off",
+   "unsure": "Not sure yet"
+  },
+  "emirate": {
+   "dubai": "Dubai",
+   "abu_dhabi": "Abu Dhabi",
+   "sharjah": "Sharjah",
+   "other": "Elsewhere in the UAE"
+  },
+  "eventType": {
+   "wedding": "Wedding",
+   "corporate": "Corporate event",
+   "launch": "Launch",
+   "dinner": "Dinner",
+   "conference": "Conference",
+   "private": "Private party",
+   "other": "Other"
+  },
+  "budget": {
+   "under_5k": "Under 5,000",
+   "5k_15k": "5,000 to 15,000",
+   "15k_50k": "15,000 to 50,000",
+   "over_50k": "Over 50,000",
+   "unsure": "Not sure yet"
+  }
+ },
+ "errors": {
+  "generic": "Check this field.",
+  "name": "Enter your full name.",
+  "company": "Enter your company name.",
+  "email": "Enter a valid email address.",
+  "phone": "Enter a valid phone number.",
+  "need": "Choose an option.",
+  "frequency": "Choose an option.",
+  "emirate": "Choose where.",
+  "trn": "A TRN has exactly 15 digits.",
+  "eventType": "Choose the type of event.",
+  "eventDate": "Choose the event date.",
+  "guests": "Enter the number of guests.",
+  "budget": "Choose a budget range.",
+  "message": "Write a short message.",
+  "consent": "Please tick this box so we can reply.",
+  "locations": "Enter a number.",
+  "failed": "We could not send your request. Please try again, or message us on WhatsApp.",
+  "limited": "Too many requests from this device. Please try again later or message us on WhatsApp."
+ }
+}

@@ -1,0 +1,10 @@
+{
+  "menu": "القائمة", "close": "إغلاق", "search": "بحث", "language": "اللغة", "switchToArabic": "العربية", "switchToEnglish": "English",
+  "learnMore": "اعرف المزيد", "viewAll": "عرض الكل", "back": "رجوع", "next": "التالي", "previous": "السابق", "continue": "متابعة",
+  "save": "حفظ", "cancel": "إلغاء", "remove": "إزالة", "add": "إضافة", "loading": "جارٍ التحميل…", "optional": "اختياري", "required": "مطلوب",
+  "free": "مجاني", "from": "ابتداءً من", "total": "الإجمالي", "subtotal": "المجموع الفرعي", "or": "أو", "and": "و", "yes": "نعم", "no": "لا",
+  "perDelivery": "لكل توصيلة", "perWeek": "في الأسبوع", "perMonth": "في الشهر", "forDays": "لمدة {days} أيام", "quantity": "الكمية",
+  "increase": "زيادة الكمية", "decrease": "تقليل الكمية", "whatsapp": "واتساب", "photoBy": "الصورة: {name}", "skip": "تخطي",
+  "page": "صفحة {page} من {pages}", "emirates": { "dubai": "دبي", "abu_dhabi": "أبوظبي", "sharjah": "الشارقة" },
+  "pricingTypes": { "one_time": "مرة واحدة", "subscription": "برنامج", "rental": "إيجار" }
+}

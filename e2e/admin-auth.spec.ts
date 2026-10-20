@@ -52,9 +52,10 @@ test("owner signs in, enrols MFA (first run) or verifies TOTP, reaches the dashb
   await expect(page.getByRole("heading", { name: /Good day/ })).toBeVisible()
   // cookie is HttpOnly
   const cookies = await page.context().cookies()
-  const session = cookies.find((c) => c.name === "athira_admin")
+  const session = cookies.find((c) => /athira_admin$/.test(c.name))
   expect(session?.httpOnly).toBe(true)
   expect(session?.sameSite).toBe("Lax")
+  if (session?.name.startsWith("__Host-")) expect(session.secure).toBe(true)
 
   if (testInfo.project.name === "mobile") await page.getByRole("button", { name: "Open navigation" }).click()
   await page.getByRole("button", { name: "Sign out" }).first().click()

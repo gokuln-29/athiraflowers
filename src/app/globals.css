@@ -330,3 +330,45 @@ html[lang="ar"] {
     display: none !important;
   }
 }
+
+/* Long-form text (product details, blog, legal). */
+.prose-athira > * + * {
+  margin-block-start: 1em;
+}
+.prose-athira h2 {
+  font-family: var(--stack-display);
+  font-size: clamp(1.5rem, 1.25rem + 1vw, 2rem);
+  line-height: 1.15;
+  margin-block: 2em 0.5em;
+}
+.prose-athira h3 {
+  font-family: var(--stack-display);
+  font-size: 1.375rem;
+  margin-block: 1.6em 0.4em;
+}
+.prose-athira ul,
+.prose-athira ol {
+  padding-inline-start: 1.25em;
+  list-style: revert;
+}
+.prose-athira li + li {
+  margin-block-start: 0.4em;
+}
+.prose-athira strong {
+  font-weight: 600;
+}
+.prose-athira blockquote {
+  padding-inline-start: 1em;
+  border-inline-start: 3px solid var(--primary);
+  color: var(--muted-foreground);
+}
+.prose-athira table {
+  inline-size: 100%;
+  border-collapse: collapse;
+}
+.prose-athira th,
+.prose-athira td {
+  padding: 0.5em 0.75em;
+  text-align: start;
+  border-block-end: 1px solid var(--border);
+}

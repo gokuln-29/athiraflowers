@@ -1,0 +1,52 @@
+{
+ "titleThanks": "Thank you, {name}",
+ "titlePending": "Complete your payment",
+ "titleCancelled": "This order was cancelled",
+ "orderNumber": "Order",
+ "confirmingPayment": "We are confirming your payment. This page updates automatically.",
+ "paymentCancelled": "Payment was not completed. Your order is held for a short time so you can finish paying.",
+ "payNow": "Pay now",
+ "payFailed": "We could not open the payment page. Please try again in a moment.",
+ "codNote": "We will confirm your order shortly. You pay cash to the driver on delivery.",
+ "cancelledNote": "If you paid by card, your refund is on its way. Contact us if you have questions.",
+ "status": {
+  "pending": "Pending",
+  "confirmed": "Confirmed",
+  "preparing": "Preparing",
+  "dispatched": "On its way",
+  "delivered": "Delivered",
+  "cancelled": "Cancelled",
+  "refunded": "Refunded"
+ },
+ "progress": "Order progress",
+ "payment": "Payment",
+ "paymentMethod": {
+  "stripe": "Card",
+  "cod": "Cash on delivery",
+  "tabby": "Tabby",
+  "tamara": "Tamara"
+ },
+ "paymentStatus": {
+  "unpaid": "unpaid",
+  "paid": "paid",
+  "failed": "failed",
+  "refunded": "refunded",
+  "partially_refunded": "partially refunded"
+ },
+ "delivery": "Delivery",
+ "contact": "Contact",
+ "invoiceFor": "Tax invoice for {company}",
+ "po": "PO {po}",
+ "items": "Items",
+ "subtotal": "Subtotal",
+ "discount": "Discount",
+ "deliveryFee": "Delivery",
+ "deposit": "Refundable deposit",
+ "total": "Total",
+ "vat": "Includes VAT at 5%",
+ "free": "Free",
+ "downloadInvoice": "Download tax invoice",
+ "help": "Ask about this order on WhatsApp",
+ "newTab": "opens in a new tab",
+ "continueShopping": "Continue shopping"
+}

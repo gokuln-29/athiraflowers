@@ -1,0 +1,10 @@
+{
+  "menu": "Menu", "close": "Close", "search": "Search", "language": "Language", "switchToArabic": "العربية", "switchToEnglish": "English",
+  "learnMore": "Learn more", "viewAll": "View all", "back": "Back", "next": "Next", "previous": "Previous", "continue": "Continue",
+  "save": "Save", "cancel": "Cancel", "remove": "Remove", "add": "Add", "loading": "Loading…", "optional": "Optional", "required": "Required",
+  "free": "Free", "from": "From", "total": "Total", "subtotal": "Subtotal", "or": "or", "and": "and", "yes": "Yes", "no": "No",
+  "perDelivery": "per delivery", "perWeek": "per week", "perMonth": "per month", "forDays": "for {days} days", "quantity": "Quantity",
+  "increase": "Increase quantity", "decrease": "Decrease quantity", "whatsapp": "WhatsApp", "photoBy": "Photo: {name}", "skip": "Skip",
+  "page": "Page {page} of {pages}", "emirates": { "dubai": "Dubai", "abu_dhabi": "Abu Dhabi", "sharjah": "Sharjah" },
+  "pricingTypes": { "one_time": "One-time", "subscription": "Program", "rental": "Rental" }
+}

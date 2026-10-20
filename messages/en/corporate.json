@@ -1,0 +1,86 @@
+{
+ "metaTitle": "Corporate flowers and gifting in Dubai, Abu Dhabi and Sharjah",
+ "metaDescription": "Weekly and monthly office flower programs, corporate gifts and event decor with tax invoices showing your TRN and PO number. Delivery across Dubai, Abu Dhabi and Sharjah.",
+ "title": "Fresh flowers for the places your team works",
+ "lead": "Weekly and monthly flower programs for reception, boardrooms and lobbies, plus corporate gifts, with tax invoices that show your TRN and purchase-order number.",
+ "ctaQuote": "Request a quote",
+ "ctaPrograms": "See weekly programs",
+ "offerTitle": "What we do for businesses",
+ "offer": {
+  "programs": {
+   "title": "Weekly and monthly programs",
+   "body": "The same day each week, a fresh arrangement arrives before you open and last week's leaves.",
+   "cta": "Browse programs"
+  },
+  "gifting": {
+   "title": "Corporate gifting",
+   "body": "Client thank-yous, executive gifts and festive hampers, one at a time or in bulk.",
+   "cta": "Browse gifts"
+  },
+  "events": {
+   "title": "Event decor",
+   "body": "Entrances, centrepieces and stage florals for launches, dinners and conferences.",
+   "cta": "Plan an event"
+  }
+ },
+ "estimatorTitle": "Estimate a weekly program",
+ "estimatorBody": "Choose an arrangement and a term to see the full cost, including VAT and the refundable vase deposit, before you talk to anyone.",
+ "estProgram": "Program",
+ "estLocations": "Locations",
+ "estLocationsHint": "Need more? Request a quote.",
+ "estTerm": "Term",
+ "estWeeks": "{count} weeks",
+ "estDeliveries": "{count, plural, one {# delivery} other {# deliveries}} at {price} each",
+ "estIncludesVat": "Includes {vat} VAT at 5%",
+ "estDeposit": "Refundable vase deposit",
+ "estDueToday": "Total due at checkout",
+ "estDepositNote": "The deposit is not subject to VAT and is returned when the vases are collected.",
+ "estAdd": "Add this program to cart",
+ "estQuote": "Ask for a custom quote",
+ "estLoading": "Calculating…",
+ "programsTitle": "Weekly and monthly programs",
+ "viewAll": "View all",
+ "invoiceTitle": "Built for accounts payable",
+ "invoice": {
+  "1": {
+   "title": "Tax invoice with your TRN",
+   "body": "Add your company name, TRN and PO number at checkout. VAT at 5% is shown separately."
+  },
+  "2": {
+   "title": "One invoice a month",
+   "body": "Programs are invoiced monthly, not delivery by delivery."
+  },
+  "3": {
+   "title": "Deposit outside VAT",
+   "body": "Vase deposits are listed separately, refundable and not part of the VAT base."
+  },
+  "4": {
+   "title": "Clear terms",
+   "body": "Minimum terms, cut-offs and pause notice are stated before you commit."
+  }
+ },
+ "stepsTitle": "How a program starts",
+ "steps": {
+  "1": {
+   "title": "Tell us the space",
+   "body": "Reception, boardroom or lobby, and the day you want delivery."
+  },
+  "2": {
+   "title": "Confirm the arrangement",
+   "body": "We match your palette and confirm the quote and the first delivery date."
+  },
+  "3": {
+   "title": "We deliver weekly",
+   "body": "Fresh flowers arrive before you open and last week's leave."
+  },
+  "4": {
+   "title": "Pause or change",
+   "body": "Seven days' notice to pause, resize or change the arrangement."
+  }
+ },
+ "giftingTitle": "Corporate gifts",
+ "giftingBody": "Singly or in bulk, with a printed card and one tax invoice.",
+ "quoteTitle": "Request a quote",
+ "quoteBody": "Tell us what you need and where. We reply with a quote, usually within one working day.",
+ "faqTitle": "Corporate questions"
+}

@@ -19,6 +19,8 @@ export const site = {
   url: trimSlash(process.env.NEXT_PUBLIC_SITE_URL?.trim() || `https://${domain}`),
   /** Media (R2) public origin; images are served from here. */
   mediaUrl: trimSlash(process.env.NEXT_PUBLIC_MEDIA_URL?.trim() || "/media"),
+  /** Prefix for human-facing order numbers, e.g. AF-100123. */
+  orderPrefix: process.env.NEXT_PUBLIC_ORDER_PREFIX?.trim() || "AF",
   currency: "AED" as const,
   /** VAT in basis points (500 = 5%). Prices are stored VAT-inclusive. */
   vatBps: Number(process.env.NEXT_PUBLIC_VAT_BPS ?? 500),

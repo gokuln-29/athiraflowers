@@ -25,7 +25,7 @@ export default async function DesignPage({ params }: PageProps<"/[locale]/design
   const ar = locale === "ar"
 
   return (
-    <main id="main" className="pb-32">
+    <div className="pb-32">
       <section className="page-grid grid gap-10 pt-16 pb-24 md:grid-cols-12 md:pt-24">
         <div className="md:col-span-8">
           <h1 className="text-display">
@@ -92,6 +92,6 @@ export default async function DesignPage({ params }: PageProps<"/[locale]/design
           </h2>
         </div>
       </section>
-    </main>
+    </div>
   )
 }

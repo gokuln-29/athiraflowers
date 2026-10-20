@@ -1,10 +1,23 @@
 import type { Metadata, Viewport } from "next"
-import { Amiri, IBM_Plex_Sans_Arabic, Instrument_Sans, Newsreader } from "next/font/google"
+import {
+  Amiri,
+  IBM_Plex_Sans_Arabic,
+  Instrument_Sans,
+  Newsreader,
+} from "next/font/google"
 import { notFound } from "next/navigation"
 import { hasLocale, NextIntlClientProvider } from "next-intl"
-import { getTranslations, setRequestLocale } from "next-intl/server"
+import {
+  getMessages,
+  getTranslations,
+  setRequestLocale,
+} from "next-intl/server"
 
-import { Toaster } from "@/components/ui/sonner"
+import { CartProvider } from "@/components/shop/cart-provider"
+import { AnnouncementBar } from "@/components/site/announcement-bar"
+import { SiteFooter } from "@/components/site/footer"
+import { SiteHeader } from "@/components/site/header"
+import { Toaster } from "@/components/ui/toast"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { site, siteName } from "@/config/site"
 import { dirOf, routing } from "@/i18n/routing"
@@ -36,11 +49,38 @@ const plexArabic = IBM_Plex_Sans_Arabic({
   display: "swap",
 })
 
+/** Namespaces needed by client components. Server components load their own. */
+const CLIENT_NAMESPACES = [
+  "common",
+  "nav",
+  "a11y",
+  "cart",
+  "forms",
+  "product",
+  "checkout",
+  "account",
+  "consent",
+  "errors",
+  "contact",
+  "corporate",
+  "events",
+  "order",
+  "shop",
+  "offers",
+  "city",
+] as const
+
 export const viewport: Viewport = {
   themeColor: "#f1ede7",
   width: "device-width",
   initialScale: 1,
 }
+
+/**
+ * Everything is rendered per request: content comes from the database and every response carries a
+ * fresh CSP nonce (see src/proxy.ts), which is incompatible with build-time prerendering.
+ */
+export const dynamic = "force-dynamic"
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }))
@@ -61,11 +101,19 @@ export async function generateMetadata({
   }
 }
 
-export default async function LocaleLayout({ children, params }: LayoutProps<"/[locale]">) {
+export default async function LocaleLayout({
+  children,
+  params,
+}: LayoutProps<"/[locale]">) {
   const { locale } = await params
   if (!hasLocale(routing.locales, locale)) notFound()
   setRequestLocale(locale)
   const t = await getTranslations({ locale, namespace: "a11y" })
+  const tc = await getTranslations({ locale, namespace: "common" })
+  const all = await getMessages()
+  const clientMessages = Object.fromEntries(
+    CLIENT_NAMESPACES.map((ns) => [ns, (all as Record<string, unknown>)[ns]])
+  )
 
   return (
     <html
@@ -79,16 +127,22 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
       )}
     >
       <body>
-        <NextIntlClientProvider>
+        <NextIntlClientProvider messages={clientMessages}>
           <TooltipProvider delay={300}>
-            <a
-              href="#main"
-              className="sr-only focus:not-sr-only focus:fixed focus:start-4 focus:top-4 focus:z-[100] focus:bg-foreground focus:px-4 focus:py-3 focus:text-background"
-            >
-              {t("skipToContent")}
-            </a>
-            {children}
-            <Toaster dir={dirOf(locale)} position={locale === "ar" ? "bottom-left" : "bottom-right"} />
+            <Toaster closeLabel={tc("close")}>
+              <CartProvider>
+                <a
+                  href="#main"
+                  className="sr-only focus:not-sr-only focus:fixed focus:start-4 focus:top-4 focus:z-[100] focus:bg-foreground focus:px-4 focus:py-3 focus:text-background"
+                >
+                  {t("skipToContent")}
+                </a>
+                <AnnouncementBar locale={locale} />
+                <SiteHeader locale={locale} />
+                <main id="main">{children}</main>
+                <SiteFooter locale={locale} />
+              </CartProvider>
+            </Toaster>
           </TooltipProvider>
         </NextIntlClientProvider>
       </body>

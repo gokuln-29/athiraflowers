@@ -1,0 +1,10 @@
+{
+ "notFoundTitle": "We could not find that page",
+ "notFoundBody": "The link may be old or the page may have moved. Try the shop, or tell us what you were looking for.",
+ "notFoundShop": "Browse the shop",
+ "notFoundHome": "Go to the home page",
+ "notFoundContact": "Contact us",
+ "errorTitle": "Something went wrong on our side",
+ "errorBody": "Nothing has been charged or changed. Please try again, or message us if it keeps happening.",
+ "retry": "Try again"
+}

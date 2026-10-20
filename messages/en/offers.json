@@ -1,0 +1,18 @@
+{
+ "metaTitle": "Offers and promo codes",
+ "metaDescription": "Current offers on flowers, plants and gifts with delivery in Dubai, Abu Dhabi and Sharjah.",
+ "title": "Offers",
+ "lead": "Codes you can use at checkout. Terms are shown on each offer.",
+ "noneTitle": "No public offers right now",
+ "noneBody": "Offers appear here when they are live. For bulk or recurring orders we can quote a better price.",
+ "bulkNote": "Ordering for a team or an event?",
+ "bulkCta": "Ask for a bulk quote",
+ "shopNow": "Shop now",
+ "percentOff": "{value}% off your order",
+ "amountOff": "{amount} off your order",
+ "minOrder": "Minimum order {amount}",
+ "maxDiscount": "Discount up to {amount}",
+ "until": "Valid until {date}",
+ "copyCode": "Copy code {code}",
+ "copied": "Code copied"
+}

@@ -1,0 +1,52 @@
+{
+ "titleThanks": "شكراً {name}",
+ "titlePending": "أكملوا الدفع",
+ "titleCancelled": "أُلغي هذا الطلب",
+ "orderNumber": "الطلب",
+ "confirmingPayment": "نتحقق من دفعكم. تتحدث هذه الصفحة تلقائياً.",
+ "paymentCancelled": "لم يكتمل الدفع. نحتفظ بطلبكم لفترة قصيرة لتتمكنوا من إكمال الدفع.",
+ "payNow": "ادفعوا الآن",
+ "payFailed": "تعذّر فتح صفحة الدفع. حاولوا مرة أخرى بعد قليل.",
+ "codNote": "سنؤكد طلبكم قريباً. تدفعون نقداً للسائق عند التسليم.",
+ "cancelledNote": "إن دفعتم بالبطاقة فالمبلغ المستردّ في الطريق. تواصلوا معنا لأي استفسار.",
+ "status": {
+  "pending": "قيد الانتظار",
+  "confirmed": "مؤكد",
+  "preparing": "قيد التحضير",
+  "dispatched": "في الطريق",
+  "delivered": "تم التسليم",
+  "cancelled": "ملغى",
+  "refunded": "مسترد"
+ },
+ "progress": "تقدم الطلب",
+ "payment": "الدفع",
+ "paymentMethod": {
+  "stripe": "بطاقة",
+  "cod": "الدفع عند الاستلام",
+  "tabby": "تابي",
+  "tamara": "تمارا"
+ },
+ "paymentStatus": {
+  "unpaid": "غير مدفوع",
+  "paid": "مدفوع",
+  "failed": "فشل",
+  "refunded": "مسترد",
+  "partially_refunded": "مسترد جزئياً"
+ },
+ "delivery": "التوصيل",
+ "contact": "التواصل",
+ "invoiceFor": "فاتورة ضريبية لـ {company}",
+ "po": "أمر الشراء {po}",
+ "items": "المنتجات",
+ "subtotal": "المجموع الفرعي",
+ "discount": "الخصم",
+ "deliveryFee": "التوصيل",
+ "deposit": "تأمين مستردّ",
+ "total": "الإجمالي",
+ "vat": "يشمل ضريبة القيمة المضافة 5%",
+ "free": "مجاني",
+ "downloadInvoice": "تنزيل الفاتورة الضريبية",
+ "help": "اسألوا عن هذا الطلب على واتساب",
+ "newTab": "يفتح في علامة تبويب جديدة",
+ "continueShopping": "متابعة التسوق"
+}

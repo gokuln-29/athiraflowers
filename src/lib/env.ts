@@ -12,6 +12,8 @@ const schema = z.object({
   ALLOWED_ORIGINS: optional,
   DATABASE_URL: z.string().min(1),
   STORAGE_DRIVER: z.enum(["r2", "local"]).default("local"),
+  /** Explicit opt-in to disk storage in a production build (local rehearsals only; never set on the VPS). */
+  ALLOW_LOCAL_STORAGE: optional,
   R2_ACCOUNT_ID: optional,
   R2_ACCESS_KEY_ID: optional,
   R2_SECRET_ACCESS_KEY: optional,
@@ -44,7 +46,7 @@ export function env(): Env {
       console.error("[env] APP_SECRET must be set (32+ chars) in production")
       throw new Error("Server is not configured correctly")
     }
-    if (value.STORAGE_DRIVER === "local") {
+    if (value.STORAGE_DRIVER === "local" && value.ALLOW_LOCAL_STORAGE !== "1") {
       console.error("[env] STORAGE_DRIVER=local is not allowed in production")
       throw new Error("Server is not configured correctly")
     }
