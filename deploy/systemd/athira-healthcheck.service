@@ -1,0 +1,6 @@
+[Unit]
+Description=Athira monitoring probe
+
+[Service]
+Type=oneshot
+ExecStart=/srv/athira/current/deploy/bin/healthcheck.sh

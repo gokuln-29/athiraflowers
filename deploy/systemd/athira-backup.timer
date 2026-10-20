@@ -1,0 +1,10 @@
+[Unit]
+Description=Daily Athira backup (03:30 Dubai time)
+
+[Timer]
+OnCalendar=*-*-* 03:30:00 Asia/Dubai
+Persistent=true
+RandomizedDelaySec=10min
+
+[Install]
+WantedBy=timers.target

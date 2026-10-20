@@ -1,0 +1,9 @@
+[Unit]
+Description=Athira encrypted offsite backup
+After=network-online.target mysql.service
+
+[Service]
+Type=oneshot
+ExecStart=/srv/athira/current/deploy/bin/backup.sh
+Nice=10
+IOSchedulingClass=idle

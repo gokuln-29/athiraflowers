@@ -13,6 +13,7 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "node --env-file=.env --import tsx scripts/migrate.ts",
     "maintenance": "node --env-file=.env --conditions react-server --import tsx scripts/maintenance.ts",
+    "admin:create": "node --env-file=.env --conditions react-server --import tsx scripts/create-admin.ts",
     "db:seed": "node --env-file=.env --conditions react-server --import tsx scripts/seed.ts",
     "test": "vitest run",
     "db:migrate:test": "DATABASE_MIGRATE_URL=\"$(grep ^DATABASE_MIGRATE_URL= .env | cut -d= -f2- | tr -d '\"' | sed 's#/athira$#/athira_test#')\" node --import tsx scripts/migrate.ts"
@@ -43,7 +44,6 @@
     "rehype-sanitize": "^6.0.0",
     "remark-gfm": "^4.0.1",
     "server-only": "^0.0.1",
-    "shadcn": "^4.22.1",
     "sharp": "^0.35.5",
     "stripe": "^23.0.0",
     "tailwind-merge": "^3.7.0",
@@ -63,6 +63,7 @@
     "eslint-config-next": "16.4.0",
     "prettier": "^3.9.10",
     "prettier-plugin-tailwindcss": "^0.8.1",
+    "shadcn": "^4.22.1",
     "tailwindcss": "^4",
     "tsx": "^4.23.15",
     "typescript": "^5",
