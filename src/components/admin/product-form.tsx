@@ -7,6 +7,7 @@ import { useMemo, useState, useTransition } from "react"
 import { saveProductAction } from "@/app/(admin)/admin/(app)/products/actions"
 import type { MediaItem } from "@/app/(admin)/admin/(app)/media/actions"
 import { MediaPicker, Thumb } from "@/components/admin/media-picker"
+import { useUnsavedWarning } from "@/components/admin/use-unsaved-warning"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { NativeSelect } from "@/components/ui/native-select"
@@ -46,6 +47,7 @@ export function ProductForm({ initial, categories }: { initial: ProductFormIniti
   const router = useRouter()
   const [v, setV] = useState(initial)
   const [images, setImages] = useState<MediaItem[]>(initial.images)
+  useUnsavedWarning(JSON.stringify(v) !== JSON.stringify(initial) || images.map((i) => i.id).join() !== initial.images.map((i) => i.id).join())
   const [errors, setErrors] = useState<Record<string, string[]>>({})
   const [formError, setFormError] = useState<string | null>(null)
   const [preview, setPreview] = useState<"en" | "ar">("en")

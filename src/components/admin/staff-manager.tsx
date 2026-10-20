@@ -24,7 +24,7 @@ export function StaffManager({ rows }: { rows: StaffRow[] }) {
       <Panel title="Add a team member" description="They sign in with a one-time temporary password, choose their own, and set up two-step verification.">
         <form className="grid gap-3 sm:grid-cols-4" noValidate onSubmit={(e) => { e.preventDefault(); create.run(() => createStaffAction(form), { ok: "Account created", onDone: (d) => { setSecret({ who: form.email, password: d.temporaryPassword }); setForm({ name: "", email: "", role: "staff" }) } }) }}>
           <Field label="Name" error={create.err("name")}><Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} /></Field>
-          <Field label="Email" error={create.err("email")}><Input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} /></Field>
+          <Field label="Email" error={create.err("email")}><Input type="email" autoComplete="off" spellCheck={false} value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} /></Field>
           <Field label="Role" hint={ROLE_HELP[form.role]}><NativeSelect value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value as StaffRow["role"] })}><option value="staff">Staff</option><option value="manager">Manager</option><option value="owner">Owner</option></NativeSelect></Field>
           <div className="flex items-end"><Button type="submit" disabled={create.pending}>Create account</Button></div>
           {create.error && <p role="alert" className="text-sm text-destructive sm:col-span-4">{create.error}</p>}

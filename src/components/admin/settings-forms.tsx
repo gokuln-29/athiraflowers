@@ -55,7 +55,7 @@ export function SettingsForms({ settings, heroMedia }: { settings: StoreSettings
           <div className="grid gap-3 sm:grid-cols-2">
             <Field label="WhatsApp number" error={err("whatsapp")} hint="International format. Leave empty to hide the WhatsApp buttons."><Input value={v.whatsapp} onChange={(e) => set("whatsapp", e.target.value)} className="num" dir="ltr" /></Field>
             <Field label="Phone"><Input value={v.phone} onChange={(e) => set("phone", e.target.value)} className="num" dir="ltr" /></Field>
-            <Field label="Email" error={err("email")}><Input type="email" value={v.email} onChange={(e) => set("email", e.target.value)} /></Field>
+            <Field label="Email" error={err("email")}><Input type="email" autoComplete="off" spellCheck={false} value={v.email} onChange={(e) => set("email", e.target.value)} /></Field>
             <span />
             <Field label="Address (English)"><Input value={v.addressEn} onChange={(e) => set("addressEn", e.target.value)} /></Field>
             <Field label="Address (Arabic)"><Input dir="rtl" value={v.addressAr} onChange={(e) => set("addressAr", e.target.value)} /></Field>

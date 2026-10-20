@@ -25,7 +25,7 @@ export function PaymentLinksManager({ rows }: { rows: LinkRow[] }) {
           <Field label="What is it for?" error={save.err("title")} className="sm:col-span-2"><Input value={f.title} onChange={(e) => setF({ ...f, title: e.target.value })} placeholder="Event deposit, Al Noor Trading" /></Field>
           <Field label="Amount (AED, incl. VAT)" error={save.err("amount")}><Input inputMode="decimal" value={f.amount} onChange={(e) => setF({ ...f, amount: e.target.value.replace(/[^\d.]/g, "") })} className="num" /></Field>
           <Field label="Customer name" hint="Optional"><Input value={f.customerName} onChange={(e) => setF({ ...f, customerName: e.target.value })} /></Field>
-          <Field label="Customer email" error={save.err("customerEmail")} hint="Optional, pre-fills the payment page"><Input type="email" value={f.customerEmail} onChange={(e) => setF({ ...f, customerEmail: e.target.value })} /></Field>
+          <Field label="Customer email" error={save.err("customerEmail")} hint="Optional, pre-fills the payment page"><Input type="email" autoComplete="off" spellCheck={false} value={f.customerEmail} onChange={(e) => setF({ ...f, customerEmail: e.target.value })} /></Field>
           <Field label="Valid for (days)"><Input inputMode="numeric" value={f.expiresInDays} onChange={(e) => setF({ ...f, expiresInDays: e.target.value.replace(/\D/g, "") })} className="num" /></Field>
           <Field label="Note shown to the customer" className="sm:col-span-3"><Input value={f.description} onChange={(e) => setF({ ...f, description: e.target.value })} maxLength={400} /></Field>
           {save.error && <p role="alert" className="text-sm text-destructive sm:col-span-3">{save.error}</p>}

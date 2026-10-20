@@ -7,6 +7,7 @@ import { deletePostAction, saveBlogCategoryAction, savePostAction } from "@/app/
 import type { MediaItem } from "@/app/(admin)/admin/(app)/media/actions"
 import { Field, Panel } from "@/components/admin/fields"
 import { MediaPicker, Thumb } from "@/components/admin/media-picker"
+import { useUnsavedWarning } from "@/components/admin/use-unsaved-warning"
 import { useSave } from "@/components/admin/use-save"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -57,6 +58,7 @@ function PostEditor({ initial, cats: initialCats, onClose }: { initial: PostRow;
   const [slugTouched, setSlugTouched] = useState(!!initial.id)
   const [newCat, setNewCat] = useState("")
   const set = <K extends keyof PostRow>(k: K, val: PostRow[K]) => setV((c) => ({ ...c, [k]: val }))
+  useUnsavedWarning(JSON.stringify(v) !== JSON.stringify(initial))
   const err = save.err
 
   function submit(e: React.FormEvent) {
