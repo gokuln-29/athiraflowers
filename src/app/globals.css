@@ -254,9 +254,6 @@ html[lang="ar"] {
     animation: hero-rise 900ms var(--ease-out-strong) both;
     animation-delay: calc(var(--i, 0) * 90ms + 80ms);
   }
-  .hero-photo {
-    animation: hero-settle 1600ms var(--ease-out-strong) both;
-  }
 
   /* Pressable feedback. */
   .pressable {
@@ -281,7 +278,6 @@ html[lang="ar"] {
 @keyframes hero-settle {
   from {
     transform: scale(1.04);
-    opacity: 0.4;
   }
   to {
     transform: scale(1);

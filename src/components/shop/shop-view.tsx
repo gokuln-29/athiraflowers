@@ -57,6 +57,8 @@ export async function ShopView({
             </Button>
           </div>
         ) : (
+          <>
+          <h2 className="sr-only">{t("results", { count: result.total })}</h2>
           <ul className="grid grid-cols-2 gap-x-4 gap-y-10 lg:grid-cols-4 lg:gap-x-6">
             {result.items.map((p, i) => (
               <li key={p.id}>
@@ -64,6 +66,7 @@ export async function ShopView({
               </li>
             ))}
           </ul>
+          </>
         )}
         <PaginationLinks locale={locale} page={result.page} pages={result.pages} basePath={basePath} query={searchParams} />
       </div>

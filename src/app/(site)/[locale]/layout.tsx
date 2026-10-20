@@ -29,7 +29,6 @@ import "../../globals.css"
 const newsreader = Newsreader({
   subsets: ["latin"],
   variable: "--font-newsreader",
-  axes: ["opsz"],
   display: "swap",
 })
 const instrument = Instrument_Sans({
@@ -42,12 +41,15 @@ const amiri = Amiri({
   weight: ["400", "700"],
   variable: "--font-amiri",
   display: "swap",
+  // Not preloaded on English pages; the files still load on demand wherever Arabic text is rendered.
+  preload: false,
 })
 const plexArabic = IBM_Plex_Sans_Arabic({
   subsets: ["arabic"],
   weight: ["400", "500", "600"],
   variable: "--font-plex-ar",
   display: "swap",
+  preload: false,
 })
 
 /** Namespaces needed by client components. Server components load their own. */
