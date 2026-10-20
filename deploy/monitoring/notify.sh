@@ -11,7 +11,7 @@ CONF="${ATHIRA_BACKUP_ENV:-/etc/athira/backup.env}"
 payload=$(python3 - "$SUBJECT" "$BODY" <<'PY'
 import json, os, sys
 print(json.dumps({
-  "sender": {"email": os.environ.get("ALERT_FROM", "alerts@adhiraflowers.ae"), "name": "Athira alerts"},
+  "sender": {"email": os.environ.get("ALERT_FROM", "alerts@athiraflowers.ae"), "name": "Athira alerts"},
   "to": [{"email": os.environ["ALERT_EMAIL"]}],
   "subject": sys.argv[1],
   "textContent": sys.argv[2],

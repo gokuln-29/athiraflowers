@@ -1,5 +1,5 @@
 // Creates (or resets the password of) an admin account.
-//   ADMIN_EMAIL=you@adhiraflowers.ae ADMIN_NAME="Your Name" ADMIN_ROLE=owner \
+//   ADMIN_EMAIL=you@athiraflowers.ae ADMIN_NAME="Your Name" ADMIN_ROLE=owner \
 //   ADMIN_PASSWORD='...' DATABASE_MIGRATE_URL=... npm run admin:create
 // Password comes from the environment so it never lands in shell history via argv.
 import "./_env";

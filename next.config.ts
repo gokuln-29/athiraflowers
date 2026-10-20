@@ -5,7 +5,7 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const isDev = process.env.NODE_ENV === "development";
 // Public media domain (Cloudflare R2 behind a custom hostname), e.g.
-// https://media.adhiraflowers.ae. Local dev points at MinIO.
+// https://media.athiraflowers.ae. Local dev points at MinIO.
 const mediaUrl = process.env.MEDIA_PUBLIC_URL ? new URL(process.env.MEDIA_PUBLIC_URL) : null;
 const mediaOrigin = mediaUrl?.origin ?? "";
 const r2Origin = process.env.R2_ENDPOINT

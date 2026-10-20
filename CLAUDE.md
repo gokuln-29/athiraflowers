@@ -1,6 +1,6 @@
 @AGENTS.md
 
-# Athira Flowers — Corporate E-commerce (UAE) · adhiraflowers.ae
+# Athira Flowers — Corporate E-commerce (UAE) · athiraflowers.ae
 
 B2B florist/plant storefront + admin panel for offices in Dubai, Abu Dhabi and Sharjah. Storefront content (products, prices, images, details) is fully admin-managed — no hardcoded product content. The brand name lives in one place: `SITE_NAME` in `src/lib/seo/site.ts`.
 

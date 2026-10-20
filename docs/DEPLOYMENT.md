@@ -1,4 +1,4 @@
-# Deploying Athira Flowers (adhiraflowers.ae) to a Hostinger Ubuntu VPS
+# Deploying Athira Flowers (athiraflowers.ae) to a Hostinger Ubuntu VPS
 
 Source of truth: `Adhira_Flowers_Architecture_Setup_Plan.pdf`. This document is the
 runnable version of PDF sections 2, 5, 6, 7 and 8. Nothing here is marked "done" until
@@ -27,9 +27,9 @@ payment methods enabled, **RPO** (recommended 24 h), **RTO** (recommended 8 h), 
 
 ## 1. DNS
 
-`A` (and `AAAA` only if the VPS really has IPv6) for `adhiraflowers.ae` and `www`. If you use
+`A` (and `AAAA` only if the VPS really has IPv6) for `athiraflowers.ae` and `www`. If you use
 Cloudflare's proxy, set SSL mode to **Full (strict)** and keep the media hostname
-(`media.adhiraflowers.ae`) pointed at R2 (step 7), not at the VPS.
+(`media.athiraflowers.ae`) pointed at R2 (step 7), not at the VPS.
 
 ## 2. Provision the server (once)
 
@@ -64,7 +64,7 @@ this least-privilege account (so even a compromised app cannot `DROP` a table).
 ## 4. Environment file
 
 Create `/etc/athira/env` (`root:athira`, mode `0640`) from `.env.example`. Required in
-production: `NEXT_PUBLIC_SITE_URL=https://adhiraflowers.ae`, `DATABASE_URL`,
+production: `NEXT_PUBLIC_SITE_URL=https://athiraflowers.ae`, `DATABASE_URL`,
 `DATABASE_MIGRATE_URL`, `AUTH_SECRET` (`openssl rand -hex 32`), `BREVO_API_KEY`, `EMAIL_FROM`,
 `R2_*`, `MEDIA_PUBLIC_URL`, `ALERT_EMAIL` (payment/webhook alerts). Optional: `STRIPE_*`. Secrets exist only here, never in git, the
 release directory or the browser. `NEXT_PUBLIC_*` values are compiled in at build time, so
@@ -75,10 +75,10 @@ rebuild (deploy again) after changing them. `AUTH_SECRET` must stay stable.
 ```bash
 sudo cp deploy/systemd/athira*.{service,timer} /etc/systemd/system/
 sudo cp deploy/nginx/athira-proxy.conf /etc/nginx/snippets/
-sudo cp deploy/nginx/adhiraflowers.ae.conf /etc/nginx/sites-available/ && sudo ln -s ../sites-available/adhiraflowers.ae.conf /etc/nginx/sites-enabled/
+sudo cp deploy/nginx/athiraflowers.ae.conf /etc/nginx/sites-available/ && sudo ln -s ../sites-available/athiraflowers.ae.conf /etc/nginx/sites-enabled/
 sudo rm -f /etc/nginx/sites-enabled/default
 # First get a certificate (HTTP only config first, or use --standalone while nginx is stopped):
-sudo certbot certonly --webroot -w /var/www/certbot -d adhiraflowers.ae -d www.adhiraflowers.ae
+sudo certbot certonly --webroot -w /var/www/certbot -d athiraflowers.ae -d www.athiraflowers.ae
 sudo nginx -t && sudo systemctl reload nginx
 sudo certbot renew --dry-run          # proves auto-renewal works (not just issuance)
 sudo systemctl daemon-reload
@@ -107,7 +107,7 @@ Create the first owner (password never goes through argv):
 ```bash
 cd /srv/athira/releases/$(cat /srv/athira/current.id)
 read -rsp 'Admin password (12+ chars): ' ADMIN_PASSWORD; echo
-sudo -u deploy env ADMIN_EMAIL=you@adhiraflowers.ae ADMIN_NAME="Your name" ADMIN_ROLE=owner \
+sudo -u deploy env ADMIN_EMAIL=you@athiraflowers.ae ADMIN_NAME="Your name" ADMIN_ROLE=owner \
   ADMIN_PASSWORD="$ADMIN_PASSWORD" DATABASE_MIGRATE_URL="<from /etc/athira/env>" npm run admin:create
 unset ADMIN_PASSWORD
 ```
@@ -119,10 +119,10 @@ Then sign in at `/admin/login` and enable two-factor under **Account**; save the
 
 ## 7. Cloudflare R2 (images)
 
-1. Create bucket `athira-media`. Attach the custom domain `media.adhiraflowers.ae` (public read).
+1. Create bucket `athira-media`. Attach the custom domain `media.athiraflowers.ae` (public read).
    Use **separate** `staging/` keys: only the app writes there, and objects are deleted after processing.
 2. Create an **API token** scoped to *Object Read & Write* on this bucket only → `R2_ACCESS_KEY_ID/SECRET`.
-3. **CORS** on the bucket: allowed origin `https://adhiraflowers.ae` only, methods `PUT`, headers
+3. **CORS** on the bucket: allowed origin `https://athiraflowers.ae` only, methods `PUT`, headers
    `Content-Type`, `Content-Length`. (CORS is not authorization; the presigned URL is.)
 4. Lifecycle rule: delete `staging/` objects older than 1 day.
 5. Never put personal data in object keys (they are random UUIDs by design).
@@ -131,7 +131,7 @@ Existing images from the Supabase build: `npm run media:migrate` (idempotent).
 
 ## 8. Stripe (optional) and Brevo
 
-Stripe: webhook endpoint `https://adhiraflowers.ae/api/stripe/webhook`, events
+Stripe: webhook endpoint `https://athiraflowers.ae/api/stripe/webhook`, events
 `checkout.session.completed`, `checkout.session.async_payment_succeeded`,
 `checkout.session.expired`; paste the signing secret into `STRIPE_WEBHOOK_SECRET`. Without keys
 customers cannot check out (card is the only payment method), so Stripe keys are required before launch. Brevo: verify the sender/domain (SPF + DKIM) for
@@ -181,7 +181,7 @@ Full disaster procedure: `deploy/backup/RESTORE_RUNBOOK.md`.
 
 `athira-monitor` (every 5 min) checks app+DB health, disk ≥ 80 %, memory < 10 % free, backup age,
 TLS expiry < 14 days, and that MySQL is not publicly bound; alerts once an hour per problem.
-**Also** add an external monitor (UptimeRobot/BetterStack) on `https://adhiraflowers.ae/en` and the
+**Also** add an external monitor (UptimeRobot/BetterStack) on `https://athiraflowers.ae/en` and the
 TLS certificate: an in-server check cannot see "the VPS is down". Logs: `journalctl -u athira`,
 `/var/log/nginx/`, MySQL slow log.
 

@@ -2,7 +2,7 @@
 # Every 5 minutes (athira-monitor.timer): app health, disk, memory, backup age, TLS expiry.
 # Alerts at most once per hour per problem. This watches the server from the inside;
 # ALSO configure an external uptime monitor (UptimeRobot/BetterStack) for
-# https://adhiraflowers.ae/en and a TLS-expiry check, which detects "whole VPS is down".
+# https://athiraflowers.ae/en and a TLS-expiry check, which detects "whole VPS is down".
 set -uo pipefail
 CONF="${ATHIRA_BACKUP_ENV:-/etc/athira/backup.env}"
 [ -r "$CONF" ] && { set -a; . "$CONF"; set +a; }
@@ -39,8 +39,8 @@ if [ -f "$STATE_DIR/last-backup-ok" ]; then
 else alert backup "No successful backup recorded yet"; fi
 
 # 5. TLS certificate expiry (< 14 days)
-if [ -n "${TLS_HOST:-adhiraflowers.ae}" ] && command -v openssl >/dev/null; then
-  end=$(echo | openssl s_client -servername "${TLS_HOST:-adhiraflowers.ae}" -connect "${TLS_HOST:-adhiraflowers.ae}:443" 2>/dev/null | openssl x509 -noout -enddate 2>/dev/null | cut -d= -f2)
+if [ -n "${TLS_HOST:-athiraflowers.ae}" ] && command -v openssl >/dev/null; then
+  end=$(echo | openssl s_client -servername "${TLS_HOST:-athiraflowers.ae}" -connect "${TLS_HOST:-athiraflowers.ae}:443" 2>/dev/null | openssl x509 -noout -enddate 2>/dev/null | cut -d= -f2)
   if [ -n "$end" ]; then
     days=$(( ($(date -d "$end" +%s) - $(date +%s)) / 86400 ))
     if [ "$days" -lt 14 ]; then alert tls "TLS certificate expires in ${days} days"; else clear_alert tls; fi
