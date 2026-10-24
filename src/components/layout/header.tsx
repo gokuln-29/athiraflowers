@@ -94,7 +94,7 @@ export function Header() {
             >
               {searchOpen ? <CloseIcon /> : <SearchIcon />}
             </button>
-            <Link href="/account" aria-label={t("account")} className={cn(iconBtn, "hidden sm:block")}>
+            <Link href="/account" aria-label={t("account")} className={cn(iconBtn, "hidden sm:inline-flex")}>
               <AccountIcon />
             </Link>
             <Link href="/cart" className={cn(iconBtn, "relative")}>

@@ -1,9 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { getStoreSettings } from "@/lib/data/settings";
-
-// Only payment methods that actually work at checkout today.
-const paymentMarks = ["Visa", "Mastercard", "Apple Pay"];
+import { PaymentMarks } from "./payment-marks";
 
 export async function Footer() {
   const [t, settings] = await Promise.all([getTranslations("Footer"), getStoreSettings()]);
@@ -101,17 +99,21 @@ export async function Footer() {
           <p className="font-mono-label text-[10px] tracking-[0.14em] text-white/55">
             {settings.trn && <>{t("trn")} {settings.trn} &middot; </>}&copy; {new Date().getFullYear()} Athira Flowers &middot; {t("rights")}
           </p>
-          <div className="flex flex-wrap gap-2">
-            {paymentMarks.map((mark) => (
-              <span
-                key={mark}
-                className="rounded-[2px] border border-white/20 px-2.5 py-1 font-mono-label text-[10px] tracking-[0.1em] text-white/60"
-              >
-                {mark}
-              </span>
-            ))}
-          </div>
+          <PaymentMarks className="flex flex-wrap items-center gap-2" />
         </div>
+
+        <p className="mt-6 font-mono-label text-[10px] tracking-[0.14em] text-white/55">
+          {t("credit")}{" "}
+          <a
+            href="https://neoklyn.com"
+            target="_blank"
+            rel="noopener"
+            dir="ltr"
+            className="inline-block py-1 normal-case text-white/80 underline-offset-4 transition-colors hover:text-white hover:underline motion-reduce:transition-none"
+          >
+            neoklyn.com
+          </a>
+        </p>
       </div>
     </footer>
   );
