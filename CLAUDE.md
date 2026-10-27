@@ -61,7 +61,7 @@ Source of truth for architecture and operations: `Adhira_Flowers_Architecture_Se
 ## Structured data (JSON-LD)
 
 - Product pages publish `Product` + `Offer` (`lib/seo/product.ts`), blog posts `BlogPosting` (`lib/seo/blog.ts`), the site `Organization` + `FloristShop` (`lib/seo/organization.ts`), plus `BreadcrumbList` and the Corporate `FAQPage`. **Markup must match the page**: the price is what the page sells it for (rentals publish the *monthly* price with `unitCode: MON`, sale prices the discounted price, `valueAddedTaxIncluded: false` because prices exclude VAT) and `availability` follows tracked stock (page cache can lag it by up to 5 minutes).
-- **Never hardcode business identifiers in markup.** `taxID`/`vatID`, phone, email and street address come from Settings and are omitted until entered (a placeholder TRN used to be published site-wide; `verify:structured-data` fails if it ever reappears). The logo is the real 180 px `/apple-icon`.
+- **Never hardcode business identifiers in markup.** `taxID`/`vatID`, phone, email and street address come from Settings and are omitted until entered (a placeholder TRN used to be published site-wide; `verify:structured-data` fails if it ever reappears). The logo is the real 180 px `/apple-icon.png`.
 - `npm run verify:structured-data` (needs the dev server) validates every product page in both locales plus Organization, FAQ and blog markup. Google's Rich Results Test on the live URLs remains the authoritative check.
 
 ## Mobile and accessibility

@@ -25,6 +25,6 @@ export function blogPostingJsonLd({
     ...(publishedAt ? { datePublished: publishedAt, dateModified: publishedAt } : {}),
     mainEntityOfPage: { "@type": "WebPage", "@id": `${SITE_URL}/${locale}/blog/${slug}` },
     author: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
-    publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL, logo: { "@type": "ImageObject", url: `${SITE_URL}/apple-icon` } },
+    publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL, logo: { "@type": "ImageObject", url: `${SITE_URL}/apple-icon.png` } },
   };
 }

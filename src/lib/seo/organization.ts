@@ -4,7 +4,7 @@ import type { StoreSettings } from "@/lib/data/settings";
 // Built from the store settings (Admin > Settings) so nothing here is a placeholder:
 // the tax number, phone, email and address appear only once the owner has entered them.
 // The 180 px apple-icon is the logo (Google wants a logo of at least 112 x 112 px).
-const LOGO = `${SITE_URL}/apple-icon`;
+const LOGO = `${SITE_URL}/apple-icon.png`;
 
 export function organizationJsonLd(settings: StoreSettings) {
   return {
