@@ -12,7 +12,7 @@
   --accent: #ebe8e2;
   --border: rgb(30 26 24 / 0.11);
   --input: rgb(30 26 24 / 0.28);
-  --ring: #8a2b3f;
+  --ring: #2d6a45;
   --radius: 0.375rem;
 
   --sidebar: #f4f2ee;
@@ -67,7 +67,7 @@
   font-variant-numeric: tabular-nums;
 }
 .admin ::selection {
-  background: #8a2b3f;
+  background: #2d6a45;
   color: #fff;
 }
 

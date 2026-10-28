@@ -21,8 +21,8 @@ Storefront = Persuade/Operate hybrid: browsing is Persuade (photography, type), 
 | `--surface-deep` | `#E6E0D8` | Tone-step panels (replaces rules and borders) |
 | `--foreground` | `#1E1A18` | Ink (full-strength running text) |
 | `--muted-foreground` | `#5A524C` | Secondary text (6.4:1 on background) |
-| `--primary` | `#8A2B3F` | Pomegranate: the only accent. Actions, links, price emphasis. 7.9:1 on white |
-| `--primary-hover` | `#6F2132` | |
+| `--primary` | `#2d6a45` | Pomegranate: the only accent. Actions, links, price emphasis. 7.9:1 on white |
+| `--primary-hover` | `#225536` | |
 | `--night` | `#25201D` | One dark section per page (footer, corporate band); text `#EDE7DF` |
 | `--success/warn/danger` | `#2F6B46` / `#8F6410` / `#B3261E` | Status only, always with text or icon |
 

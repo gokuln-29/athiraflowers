@@ -38,7 +38,7 @@ export type InvoiceSeller = { legalName: string; trn: string; licenceNo: string;
 const FONT_DIR = path.resolve(process.cwd(), "assets/fonts")
 const INK = "#1e1a18"
 const MUTED = "#5a524c"
-const ACCENT = "#8a2b3f"
+const ACCENT = "#2d6a45"
 
 /**
  * Bilingual (English + Arabic) tax invoice, A4. Prices are VAT-inclusive; VAT is extracted from the taxable total.

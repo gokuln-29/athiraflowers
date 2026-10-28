@@ -13,7 +13,7 @@ const swatches = [
   ["surface", "#F8F6F2", "foreground"],
   ["surface-deep", "#E6E0D8", "foreground"],
   ["foreground", "#1E1A18", "background"],
-  ["primary", "#8A2B3F", "primary-foreground"],
+  ["primary", "#2d6a45", "primary-foreground"],
   ["night", "#25201D", "night-foreground"],
 ]
 

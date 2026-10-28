@@ -56,7 +56,7 @@ export function orderReceivedEmail(d: OrderEmailData): QueuedEmail {
     preheader: subject,
     title: subject,
     bodyHtml: `<p style="margin:0 0 12px;">${esc(ar ? `شكراً ${d.contactName}.` : `Thank you, ${d.contactName}.`)} ${esc(lead)}</p>${table(d)}${details(d)}
-<p style="margin:20px 0 0;"><a href="${orderUrl(d)}" style="color:#8a2b3f;">${esc(ar ? "عرض طلبكم" : "View your order")}</a></p>`,
+<p style="margin:20px 0 0;"><a href="${orderUrl(d)}" style="color:#2d6a45;">${esc(ar ? "عرض طلبكم" : "View your order")}</a></p>`,
   })
   return { kind: "order.received", to: d.contactEmail, toName: d.contactName, subject, html, text: `${subject}\n\n${lead}\n\n${orderUrl(d)}`, tags: ["order"], dedupeKey: `order:${d.orderNumber}:received` }
 }
@@ -65,10 +65,10 @@ export function orderPaidEmail(d: OrderEmailData): QueuedEmail {
   const ar = d.locale === "ar"
   const subject = ar ? `تم تأكيد طلبكم ${d.orderNumber}` : `Order ${d.orderNumber} confirmed`
   const lead = ar ? "استلمنا دفعكم وطلبكم مؤكد. سنراسلكم عند خروج الطلب للتوصيل." : "Your payment is received and your order is confirmed. We will email you when it is on its way."
-  const invoice = d.invoiceRequested ? `<p style="margin:16px 0 0;"><a href="${absoluteUrl(`/api/orders/${d.publicToken}/invoice`)}" style="color:#8a2b3f;">${esc(ar ? "تنزيل الفاتورة الضريبية (PDF)" : "Download tax invoice (PDF)")}</a></p>` : ""
+  const invoice = d.invoiceRequested ? `<p style="margin:16px 0 0;"><a href="${absoluteUrl(`/api/orders/${d.publicToken}/invoice`)}" style="color:#2d6a45;">${esc(ar ? "تنزيل الفاتورة الضريبية (PDF)" : "Download tax invoice (PDF)")}</a></p>` : ""
   const html = emailLayout(d.locale, {
     preheader: subject, title: subject,
-    bodyHtml: `<p style="margin:0 0 12px;">${esc(lead)}</p>${table(d)}${details(d)}${invoice}<p style="margin:20px 0 0;"><a href="${orderUrl(d)}" style="color:#8a2b3f;">${esc(ar ? "عرض طلبكم" : "View your order")}</a></p>`,
+    bodyHtml: `<p style="margin:0 0 12px;">${esc(lead)}</p>${table(d)}${details(d)}${invoice}<p style="margin:20px 0 0;"><a href="${orderUrl(d)}" style="color:#2d6a45;">${esc(ar ? "عرض طلبكم" : "View your order")}</a></p>`,
   })
   return { kind: "order.paid", to: d.contactEmail, toName: d.contactName, subject, html, text: `${subject}\n\n${lead}\n\n${orderUrl(d)}`, tags: ["order"], dedupeKey: `order:${d.orderNumber}:paid` }
 }
@@ -87,13 +87,13 @@ export function orderStatusEmail(d: OrderEmailData, status: string): QueuedEmail
   if (!copy) return null
   const [title, lead] = copy[d.locale]
   const subject = title.replace("{n}", d.orderNumber)
-  const html = emailLayout(d.locale, { preheader: subject, title: subject, bodyHtml: `<p style="margin:0 0 12px;">${esc(lead)}</p>${details(d)}<p style="margin:20px 0 0;"><a href="${orderUrl(d)}" style="color:#8a2b3f;">${esc(d.locale === "ar" ? "عرض طلبكم" : "View your order")}</a></p>` })
+  const html = emailLayout(d.locale, { preheader: subject, title: subject, bodyHtml: `<p style="margin:0 0 12px;">${esc(lead)}</p>${details(d)}<p style="margin:20px 0 0;"><a href="${orderUrl(d)}" style="color:#2d6a45;">${esc(d.locale === "ar" ? "عرض طلبكم" : "View your order")}</a></p>` })
   return { kind: `order.${status}`, to: d.contactEmail, toName: d.contactName, subject, html, text: `${subject}\n\n${lead}\n\n${orderUrl(d)}`, tags: ["order"], dedupeKey: `order:${d.orderNumber}:${status}` }
 }
 
 export function staffOrderEmail(to: string, d: OrderEmailData, headline: string, adminUrl: string): QueuedEmail {
   const subject = `${headline}: ${d.orderNumber} (${formatMoney(d.totals.totalMinor, "en", { compact: true })}, ${d.paymentMethod.toUpperCase()})`
-  const html = emailLayout("en", { preheader: subject, title: subject, bodyHtml: `${table({ ...d, locale: "en" })}${details({ ...d, locale: "en" })}<p style="margin:20px 0 0;"><a href="${adminUrl}" style="color:#8a2b3f;">Open in admin</a></p>` })
+  const html = emailLayout("en", { preheader: subject, title: subject, bodyHtml: `${table({ ...d, locale: "en" })}${details({ ...d, locale: "en" })}<p style="margin:20px 0 0;"><a href="${adminUrl}" style="color:#2d6a45;">Open in admin</a></p>` })
   return { kind: "order.staff", to, subject, html, text: `${subject}\n${adminUrl}`, tags: ["order-internal"], dedupeKey: `order:${d.orderNumber}:staff:${headline}` }
 }
 

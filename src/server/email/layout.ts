@@ -16,6 +16,6 @@ export function emailLayout(locale: "en" | "ar", opts: { preheader: string; titl
     <h1 style="font-size:22px;font-weight:600;margin:0 0 16px;font-family:Georgia,'Times New Roman',serif;">${esc(opts.title)}</h1>
     ${opts.bodyHtml}
   </div>
-  <p style="font-size:13px;color:#5a524c;margin:20px 0 0;line-height:1.5;">${opts.footerHtml ?? `${esc(siteName(locale))} · <a href="${site.url}" style="color:#8a2b3f;">${esc(site.domain)}</a>`}</p>
+  <p style="font-size:13px;color:#5a524c;margin:20px 0 0;line-height:1.5;">${opts.footerHtml ?? `${esc(siteName(locale))} · <a href="${site.url}" style="color:#2d6a45;">${esc(site.domain)}</a>`}</p>
 </div></body></html>`
 }
